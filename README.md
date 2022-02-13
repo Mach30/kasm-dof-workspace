@@ -5,10 +5,10 @@
 This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeling Language](https://github.com/Mach30/m30ml), [Mach 30 Project Manager](https://github.com/Mach30/m30mlTools), the [Distributed OSHW Framework (DOF)](https://github.com/Mach30/dof), and [Sliderule](https://github.com/Mach30/sliderule) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - Node JS Tools
-    - nodejs
-    - npm
-    - yarn
-    - npx
+    - nodejs v16.14.0
+    - npm v8.3.1 (included with nodejs)
+    - npx v8.3.1 (included with nodejs)
+    - yarn v1.22.11
 - Content Viewers
     - Chrome
     - Firefox
@@ -23,6 +23,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
 - Vim with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - VS Code with the following extensions
+    - [Node.js Extension Pack](https://marketplace.visualstudio.com/items?itemName=waderyan.nodejs-extension-pack)
     - [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)

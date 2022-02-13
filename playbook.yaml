@@ -48,5 +48,61 @@
 # Be sure to use the same hosts and connection entries above
 # addtional plays
 
+- 
+  # Install NodeJS Tools
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+
+  vars:
+    node_version: "16.14.0"
+    v_node_version: "v{{ node_version }}"
+    npm_version: "8.3.1"
+    npx_version: "8.3.1"
+    yarn_version: "1.22.11"
+
+
+  tasks:   # Test Node JS Tools versions
+  - name: Get node version
+    shell: node --version
+    register: installed_node_version
+  - name: Get npm version
+    shell: npm --version
+    register: installed_npm_version
+  - name: Get npx installed version
+    shell: npx --version
+    register: installed_npx_version
+  - name: Get yarn version
+    shell: yarn --version
+    register: installed_yarn_version    
+  - name: Display node tool versions
+    debug:
+      msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
+  - name: Test node version
+    fail:
+      msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
+    when: installed_node_version.stdout != v_node_version      
+  - name: Test npm version
+    fail:
+      msg: "NPM Version Error: Expected {{ npm_version }} | Found {{ installed_npm_version.stdout }}"
+    when: installed_npm_version.stdout != npm_version
+  - name: Test npx version
+    fail:
+      msg: "NPX Version Error: Expected {{ npx_version }} | Found {{ installed_npx_version.stdout }}"
+    when: installed_npx_version.stdout != npx_version
+  - name: Test yarn version
+    fail:
+      msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
+    when: installed_yarn_version.stdout != yarn_version        
+
+  roles:
+  - role: grzegorznowak.nvm_node
+    nvm_install_script_version: "0.39.1"  
+    nvm_node_version: "{{ node_version }}"  
+    nvm_install_globally:
+    - name: yarn
+      version: "{{ yarn_version }}"
+
+
 # Three dots indicate the end of a YAML document
 ...
