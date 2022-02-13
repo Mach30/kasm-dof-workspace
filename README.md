@@ -9,13 +9,9 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - npm v8.3.1 (included with nodejs)
     - npx v8.3.1 (included with nodejs)
     - yarn v1.22.11
-- Content Viewers
-    - Chrome
-    - Firefox
-    - [Evince Document Reader](https://wiki.gnome.org/Apps/Evince)
 - Utilities
-    - git
-    - [Keychain](https://www.funtoo.org/Keychain)
+    - git v2.35.1
+    - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) with PDF support enabled
     - [PlantUML](https://plantuml.com/)
@@ -28,6 +24,10 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
+- Content Viewers
+    - Chrome
+    - Firefox
+    - [Evince Document Reader](https://wiki.gnome.org/Apps/Evince)
 
 ## How to Use this Repo
 
