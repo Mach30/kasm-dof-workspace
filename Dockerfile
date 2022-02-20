@@ -1,4 +1,4 @@
-FROM kasmweb/core-ubuntu-focal
+FROM ghcr.io/j-simmons-phd/kasm-core-ubuntu-focal:develop
 USER root
 
 ENV HOME /home/kasm-default-profile
