@@ -196,21 +196,86 @@
   tags: install_generator_plantuml
 
   vars:
-    jre_version: 2:1.11-72
-    jre_version_expected: openjdk 11.0.13 2021-10-19
+    jdk_version: 2:1.11-72
+    jdk_version_expected: openjdk 11.0.13 2021-10-19
+    graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
 
   tasks:
-  - name: Install JRE
+  - name: Install JDK
     apt:
-      name: "default-jre={{ jre_version }}"
+      name: "default-jdk={{ jdk_version }}"
       update_cache: yes
-  - name: Get JRE Version
+  - name: Get JDK Version
     shell: java --version | grep -m 1 -i openjdk
-    register: installed_jre_version
-  - name: Display JRE, GraphViz, and PlantUML versions
+    register: installed_jdk_version
+  - name: Install pre-reqs to build graphviz
+    apt:
+      name: build-essential, libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig 
+      update_cache: yes  
+  - name: Download graphviz source code
+    get_url:
+      url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.50.0/graphviz-2.50.0.tar.gz
+      dest: /tmp/graphviz-2.50.0.tar.gz
+      checksum: "sha256:e17021a510bbd2770d4ca4b4eb841138122aaa5948f9e617e6bc12b4bac62e8d"
+  - name: Expand source files archive
+    unarchive:
+      src: /tmp/graphviz-2.50.0.tar.gz
+      dest: /tmp/
+      remote_src: yes
+      creates: /tmp/graphviz-2.50.0/README
+  - name: Build graphviz
+    shell: 
+      cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
+      creates:
+      chdir: /tmp/graphviz-2.50.0/
+      executable: /bin/bash    
+  - name: Get graphviz version
+    shell: dot -V
+    register: installed_graphviz_version
+  - name: Display JDK and GraphViz versions
     debug:
-      msg: "JRE = {{ installed_jre_version.stdout }} | graphviz = | plantuml ="
+      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
+  - name: Test JDK version
+    fail:
+      msg: "JDK Version Error: Expected {{ jdk_version_expected }} | Found {{ installed_jdk_version.stdout }}"
+    when: installed_jdk_version.stdout != jdk_version_expected  
+  - name: Test Graphviz version
+    fail:
+      msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
+    when: installed_graphviz_version.stderr != graphviz_version_expected        
 
+- 
+  # install ASCII Doctor
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: install_generator_asciidoctor
+
+  vars:
+    asciidoctor_version: 2.0.17
+    asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
+
+  tasks:
+  - name: Install Ruby
+    apt:
+      name: ruby-full
+      update_cache: yes
+  - name: Run gem install for asciidoctor
+    shell: 
+      cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
+  - name: Install PlantUML and PDF support
+    shell:
+      cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
+  - name: Get asciidoctor version
+    shell: asciidoctor --version | grep Asciidoctor | sed 's/[[:alpha:]|(|[:space:]]//g' | sed 's/[*~://]//g'
+    register: installed_asciidoctor_version
+  - name: Display asciidoctor version
+    debug:
+      msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"   
+  - name: Test asciidoctor version
+    fail:
+      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
+    when: installed_asciidoctor_version.stdout != asciidoctor_version_expected        
 
 # Three dots indicate the end of a YAML document
 ...

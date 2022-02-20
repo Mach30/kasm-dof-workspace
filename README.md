@@ -16,17 +16,20 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
     - [PlantUML](https://plantuml.com/)
-        - JRE v11
-        - Graphviz
-    - [AsciiDoctor](https://asciidoctor.org/) with PlantUML and PDF support
-- [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
-- Vim with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
+        - JDK v11
+        - Graphviz 2.50 (built from source)
+    - [AsciiDoctor](https://asciidoctor.org/) v2.0.17 with PlantUML and PDF support
 - VS Code with the following extensions
     - [Node.js Extension Pack](https://marketplace.visualstudio.com/items?itemName=waderyan.nodejs-extension-pack)
     - [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
+- [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
+- Vim with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
+- Knowledge Capture Tools
+  - [Obsidian](https://obsidian.md/) v0.13.23
+  - [JabRef](https://www.jabref.org/) v5.5.6
 - Content Viewers
     - Chrome
     - Firefox
