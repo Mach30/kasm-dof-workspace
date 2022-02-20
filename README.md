@@ -13,8 +13,11 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - git v2.35.1
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
 - Artifact Generators
-    - [Pandoc](https://pandoc.org/) with PDF support enabled
+    - [Pandoc](https://pandoc.org/) v2.17.0.1
+    - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
     - [PlantUML](https://plantuml.com/)
+        - JRE v11
+        - Graphviz
     - [AsciiDoctor](https://asciidoctor.org/) with PlantUML and PDF support
 - [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
 - Vim with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)

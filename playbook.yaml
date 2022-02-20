@@ -5,6 +5,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  tags: always
 
   # Vars: variables that will apply to the play, on all targets 
 
@@ -53,6 +54,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  tags: install_node
 
   vars:
     node_version: "16.14.0"
@@ -108,6 +110,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  tags: install_utilities
 
   vars:
     git_version: "2.35.1"
@@ -145,6 +148,69 @@
     fail:
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
     when: installed_keychain_version.stdout != keychain_version_expected    
+
+-
+  # install Pandoc & TexLive
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: install_generator_pandoc
+
+  vars:
+    pandoc_version: "2.17.0.1"
+    texlive_version: "2019.20200218-1"
+    texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
+
+  tasks:
+  - name: install TeX Live
+    apt:
+      name: "texlive={{ texlive_version }}"  
+      update_cache: yes
+  - name: Get pandoc version
+    shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
+    register: installed_pandoc_version
+  - name: Get TeX Live version  
+    shell: latex --version | grep -i Tex -m 1 
+    register: installed_texlive_version
+  - name: Display pandoc and texlive versions
+    debug:
+      msg: "pandoc = {{ installed_pandoc_version.stdout }} | texlive = {{ installed_texlive_version.stdout }}"
+  - name: Test pandoc version
+    fail:
+      msg: "Pandoc Version Error: Expected {{ pandoc_version }} | Found {{ installed_pandoc_version.stdout }}"
+    when: installed_pandoc_version.stdout != pandoc_version    
+  - name: Test texlive version
+    fail:
+      msg: "TeX Live Version Error: Expected {{ texlive_version_expected }} | Found {{ installed_texlive_version.stdout }}"
+    when: installed_texlive_version.stdout != texlive_version_expected        
+
+  roles:
+  - role: andrewrothstein.pandoc
+    pandoc_ver: "{{ pandoc_version }}"
+
+-
+  # install PlantUML
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: install_generator_plantuml
+
+  vars:
+    jre_version: 2:1.11-72
+    jre_version_expected: openjdk 11.0.13 2021-10-19
+
+  tasks:
+  - name: Install JRE
+    apt:
+      name: "default-jre={{ jre_version }}"
+      update_cache: yes
+  - name: Get JRE Version
+    shell: java --version | grep -m 1 -i openjdk
+    register: installed_jre_version
+  - name: Display JRE, GraphViz, and PlantUML versions
+    debug:
+      msg: "JRE = {{ installed_jre_version.stdout }} | graphviz = | plantuml ="
+
 
 # Three dots indicate the end of a YAML document
 ...
