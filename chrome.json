@@ -17,6 +17,11 @@
             "args": null
         },
         {
+            "name": "adjtimex",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
             "name": "alarm",
             "action": "SCMP_ACT_ALLOW",
             "args": null
@@ -712,6 +717,11 @@
             "args": null
         },
         {
+            "name": "mount",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
             "name": "mprotect",
             "action": "SCMP_ACT_ALLOW",
             "args": null
@@ -838,6 +848,11 @@
         },
         {
             "name": "pipe2",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
+            "name": "pivot_root",
             "action": "SCMP_ACT_ALLOW",
             "args": null
         },
@@ -1458,6 +1473,11 @@
         },
         {
             "name": "umask",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
+            "name": "umount2",
             "action": "SCMP_ACT_ALLOW",
             "args": null
         },

@@ -25,11 +25,11 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
-- [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
-- Vim with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Knowledge Capture Tools
   - [Obsidian](https://obsidian.md/) v0.13.23
   - [JabRef](https://www.jabref.org/) v5.5.6
+- [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
+- Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Content Viewers
     - Chrome
     - Firefox
