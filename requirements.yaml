@@ -3,4 +3,5 @@
 - irixjp.role_example_hello           # https://galaxy.ansible.com/irixjp/role_example_hello
 - grzegorznowak.nvm_node              # https://galaxy.ansible.com/grzegorznowak/nvm_node
 - andrewrothstein.pandoc              # https://galaxy.ansible.com/andrewrothstein/pandoc
+- gantsign.visual-studio-code         # https://galaxy.ansible.com/gantsign/visual-studio-code
 ...

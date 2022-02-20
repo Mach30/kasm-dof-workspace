@@ -62,6 +62,8 @@
     npm_version: "8.3.1"
     npx_version: "8.3.1"
     yarn_version: "1.22.11"
+    yo_version: "4.3.0"
+    generator_code_version: "1.6.7"
 
 
   tasks:   # Test Node JS Tools versions
@@ -104,6 +106,10 @@
     nvm_install_globally:
     - name: yarn
       version: "{{ yarn_version }}"
+    - name: yo
+      version: "{{ yo_version }}"
+    - name: generator-code
+      version: "{{ generator_code_version }}"    
 
 -
   # install keychain, and git
@@ -276,6 +282,92 @@
     fail:
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected        
+
+- 
+  # install sudo for the vs-code role below 
+  hosts: localhost
+  connection: local
+  tags: install_vscode
+
+  tasks:
+  - name: Install Sudo
+    apt:
+      name: sudo
+      update_cache: yes
+  - name: Preserve DONT_PROMPT_WSL_INSTALL in sudoers
+    lineinfile:
+      path: "/etc/sudoers"
+      line: "Defaults        env_keep += \"DONT_PROMPT_WSL_INSTALL\""
+    when: wsl2_environment
+
+-
+# add dev user to give vs code somewhere to install extensions
+  hosts: localhost
+  connection: local
+  tags: install_vscode
+
+  tasks:
+  - name: Add WSL2 required variables to the environment
+    lineinfile:
+      path: "/etc/bash.bashrc"
+      line: "export DONT_PROMPT_WSL_INSTALL=1"
+    when: wsl2_environment
+  - name: Add dev user
+    user:
+      name: dev
+      uid: 1001
+
+-
+  # install the remainder of the tools
+  hosts: localhost
+  connection: local
+  tags: install_vscode
+
+  environment: 
+    DONT_PROMPT_WSL_INSTALL: 1
+  roles:
+    - role: gantsign.visual-studio-code
+      users:
+        - username: "dev"
+          visual_studio_code_extensions:
+            - waderyan.nodejs-extension-pack
+            - redhat.vscode-yaml
+            - jebbs.plantuml
+            - asciidoctor.asciidoctor-vscode
+            - samuelcolvin.jinjahtml
+          visual_studio_code_settings_overwrite: yes
+          visual_studio_code_settings: {
+            "extensions.ignoreRecommendations": true,
+            "update.mode": "none",
+            "extensions.autoUpdate": false,
+            "extensions.autoCheckUpdates": false,
+            "plantuml.exportFormat": "png",
+            "plantuml.jar": "/usr/local/bin/plantuml.jar",
+            "plantuml.render": "Local",
+            "terminal.integrated.profiles.linux": {
+              "bash (login)": {
+                "path": "bash",
+                "args": ["-l"]
+                }
+              },
+            "terminal.integrated.defaultProfile.linux": "bash (login)" 
+          }  
+
+-
+  # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
+  hosts: localhost
+  connection: local
+  tags: install_vscode
+
+  tasks:
+  - name: Copy VS Code changes to kasm-default-profile
+    shell: 
+      cmd: cp -r /home/dev/.config/Code/ /home/kasm-default-profile/.config/Code/ && cp -r /home/dev/.vscode/ /home/kasm-default-profile/.vscode/
+  - name: Remove dev user
+    user:
+      name: dev
+      state: absent
+      remove: yes    
 
 # Three dots indicate the end of a YAML document
 ...
