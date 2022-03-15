@@ -12,6 +12,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - Utilities
     - git v2.35.1
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
+    - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
@@ -30,7 +31,6 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
   - [Obsidian](https://obsidian.md/) v0.13.23
   - [JabRef](https://www.jabref.org/) v5.5.6
 - [Glamorous Toolkit](https://gtoolkit.com/) (with [Pharo](https://pharo.org/) built in)
-- Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Content Viewers
     - Chrome
     - Firefox
