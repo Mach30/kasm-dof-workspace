@@ -172,6 +172,10 @@
     apt:
       name: "texlive={{ texlive_version }}"  
       update_cache: yes
+    # https://github.com/mikefarah/yq/#install  
+  - name: Install yq
+    shell:
+      cmd: "wget https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/{{ yq_executable }} -O /usr/bin/yq && chmod +x /usr/bin/yq"  
   - name: Get pandoc version
     shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_pandoc_version
@@ -395,6 +399,32 @@
   - name: Set up JabRef shortcut
     shell:
       cmd: cp /var/lib/flatpak/exports/share/applications/org.jabref.jabref.desktop /usr/share/applications/org.jabref.jabref.desktop && cp /var/lib/flatpak/exports/share/icons/hicolor/128x128/apps/org.jabref.jabref.png /usr/share/icons/hicolor/128x128/apps/org.jabref.jabref.png
+
+-
+  # Install knowledge capture tools
+  hosts: localhost
+  connection: local
+  tags: install_gtk
+
+  tasks:
+  - name: Download Glamourous Toolkit
+    get_url:
+      url: https://dl.feenk.com/gt/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      dest: /home/kasm-default-profile/
+  - name: Create installation directory
+    file:
+      path: /home/kasm-default-profile/GlamorousToolkit/
+      state: directory
+      mode: '0755'    
+  - name: Unzip Glamourous Toolkit
+    unarchive:
+      src: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      dest: /home/kasm-default-profile/GlamorousToolkit/
+      remote_src: yes
+  - name: Remove zip file
+    file:
+      path: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      state: absent
 
 # Three dots indicate the end of a YAML document
 ...

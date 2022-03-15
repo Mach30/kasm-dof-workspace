@@ -15,6 +15,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
+    - [yq](https://mikefarah.gitbook.io/yq/) v4.20.2
     - [PlantUML](https://plantuml.com/)
         - JDK v11
         - Graphviz 2.50 (built from source)
@@ -28,7 +29,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - Knowledge Capture Tools
   - [Obsidian](https://obsidian.md/) v0.13.23
   - [JabRef](https://www.jabref.org/) v5.5.6
-- [Pharo](https://pharo.org/) with [Glamorous Toolkit](https://gtoolkit.com/)
+- [Glamorous Toolkit](https://gtoolkit.com/) (with [Pharo](https://pharo.org/) built in)
 - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Content Viewers
     - Chrome
