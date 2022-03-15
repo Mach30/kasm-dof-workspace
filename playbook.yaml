@@ -431,5 +431,21 @@
       path: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
       state: absent
 
+-
+  # install readers
+  hosts: localhost
+  connection: local
+  tags: install_readers
+
+  tasks:
+  - name: install Evince
+    apt:
+      name: evince
+      update_cache: yes
+
+  roles:
+  - role: webarchitect609.google_chrome
+  - role: do1jlr.install_firefox
+
 # Three dots indicate the end of a YAML document
 ...
