@@ -416,7 +416,7 @@
   # Install knowledge capture tools
   hosts: localhost
   connection: local
-  tags: install_gtk
+  tags: install_gtk_pharo
 
   tasks:
   - name: Download Glamourous Toolkit
@@ -425,18 +425,31 @@
       dest: /home/kasm-default-profile/
   - name: Create installation directory
     file:
-      path: /home/kasm-default-profile/GlamorousToolkit/
+      path: /home/kasm-default-profile/gtoolkit/
       state: directory
       mode: '0755'    
   - name: Unzip Glamourous Toolkit
     unarchive:
       src: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
-      dest: /home/kasm-default-profile/GlamorousToolkit/
+      dest: /home/kasm-default-profile/gtoolkit/
       remote_src: yes
   - name: Remove zip file
     file:
       path: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
       state: absent
+  - name: Download Pharo
+    get_url:
+      url: https://files.pharo.org/pharo-launcher/linux64
+      dest: /home/kasm-default-profile/
+  - name: Unzip Pharo
+    unarchive:
+      src: /home/kasm-default-profile/PharoLauncher-linux-2.3-x64.zip
+      dest: /home/kasm-default-profile/
+      remote_src: yes
+  - name: Remove zip file
+    file:
+      path: /home/kasm-default-profile/PharoLauncher-linux-2.3-x64.zip
+      state: absent      
 
 -
   # install readers

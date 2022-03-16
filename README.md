@@ -30,7 +30,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - Knowledge Capture Tools
   - [Obsidian](https://obsidian.md/) v0.13.23
   - [JabRef](https://www.jabref.org/) v5.5.6
-- [Glamorous Toolkit](https://gtoolkit.com/) (with [Pharo](https://pharo.org/) built in)
+- [Glamorous Toolkit](https://gtoolkit.com/) and [Pharo](https://pharo.org/)
 - Content Viewers
     - Chrome
     - Firefox
