@@ -418,10 +418,14 @@
   connection: local
   tags: install_gtk_pharo
 
+  vars:
+  - gtoolkit_zip: GlamorousToolkit-Linux-x86_64-v0.8.1322.zip
+  - gtoolkit_zip_path: "/home/kasm-default-profile/{{ gtoolkit_zip }}"
+
   tasks:
   - name: Download Glamourous Toolkit
     get_url:
-      url: https://dl.feenk.com/gt/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      url: "https://dl.feenk.com/gt/{{ gtoolkit_zip }}"
       dest: /home/kasm-default-profile/
   - name: Create installation directory
     file:
@@ -430,12 +434,12 @@
       mode: '0755'    
   - name: Unzip Glamourous Toolkit
     unarchive:
-      src: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      src: "{{ gtoolkit_zip_path }}"
       dest: /home/kasm-default-profile/gtoolkit/
       remote_src: yes
   - name: Remove zip file
     file:
-      path: /home/kasm-default-profile/GlamorousToolkit-Linux-x86_64-v0.8.1305.zip
+      path: "{{ gtoolkit_zip_path }}"
       state: absent
   - name: Download Pharo
     get_url:
