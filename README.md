@@ -36,7 +36,9 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - Firefox
     - [Evince Document Reader](https://wiki.gnome.org/Apps/Evince)
 
-## How to Use this Repo
+## A Note on Licensing
+
+This repo includes code and packages from a number of outside sources (including [Kasm Workspaces](https://www.kasmweb.com/)).  The project license file only covers code written by the project author and contributors.  All other code is subject to its authors' terms and conditions.
 
 ## How to Use this Repo
 
