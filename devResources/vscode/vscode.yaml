@@ -4,6 +4,8 @@
   # install sudo for the vs-code role below 
   hosts: localhost
   connection: local
+  tags: install_vscode
+
   tasks:
   - name: Install Sudo
     apt:
@@ -19,7 +21,14 @@
 # add dev user to give vs code somewhere to install extensions
   hosts: localhost
   connection: local
+  tags: install_vscode
+
   tasks:
+  - name: Add WSL2 required variables to the environment
+    lineinfile:
+      path: "/etc/bash.bashrc"
+      line: "export DONT_PROMPT_WSL_INSTALL=1"
+    when: wsl2_environment
   - name: Add dev user
     user:
       name: dev
@@ -29,6 +38,8 @@
   # install the remainder of the tools
   hosts: localhost
   connection: local
+  tags: install_vscode
+
   environment: 
     DONT_PROMPT_WSL_INSTALL: 1
   roles:
@@ -56,6 +67,8 @@
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
   hosts: localhost
   connection: local
+  tags: install_vscode
+
   tasks:
   - name: Copy VS Code changes to kasm-default-profile
     shell: 
