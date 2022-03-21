@@ -157,15 +157,16 @@
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
     when: installed_keychain_version.stdout != keychain_version_expected   
   - name: Install @capsulecorplab .vimrc
-    get_url:
-      url: https://gist.githubusercontent.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739/raw/4a6e6f6ff92b96919be111c9cbb5a4a21ab472d2/.vimrc
-      dest: /home/kasm-default-profile/
+    copy:
+      src: /home/kasm-default-profile/install_files/.vimrc
+      dest: /home/kasm-default-profile/.vimrc
+      remote_src: yes
   - name: Install @capsulecorplab .gitconfig
-    get_url:
-      url: https://gist.githubusercontent.com/capsulecorplab/401ba2fe0857a328f2a626adbf078cc6/raw/b89a6234f0d620ff60bcfe37f95de197b8772377/.gitconfig
-      dest: /home/kasm-default-profile/ 
+    copy:
+      src: /home/kasm-default-profile/install_files/.gitconfig
+      dest: /home/kasm-default-profile/.gitconfig
+      remote_src: yes
        
-
 -
   # install Pandoc & TexLive
   hosts: localhost
@@ -177,19 +178,21 @@
     pandoc_version: "2.17.0.1"
     texlive_version: "2019.20200218-1"
     texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
-    # https://mikefarah.gitbook.io/yq/
-    yq_version: v4.20.2
-    yq_executable: yq_linux_amd64
 
   tasks:
   - name: install TeX Live
     apt:
-      name: "texlive={{ texlive_version }}"  
+      name: "texlive={{ texlive_version }}"
       update_cache: yes
-    # https://github.com/mikefarah/yq/#install  
+    # https://mikefarah.gitbook.io/yq/
   - name: Install yq
-    shell:
-      cmd: "wget https://github.com/mikefarah/yq/releases/download/{{ yq_version }}/{{ yq_executable }} -O /usr/bin/yq && chmod +x /usr/bin/yq"  
+    copy:
+      src: /home/kasm-default-profile/install_files/yq
+      dest: /usr/bin/yq
+      remote_src: yes
+      owner: root
+      group: root
+      mode: '0755'
   - name: Get pandoc version
     shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_pandoc_version
@@ -236,26 +239,25 @@
     apt:
       name: build-essential, libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig 
       update_cache: yes  
-  - name: Download graphviz source code
-    get_url:
-      url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.50.0/graphviz-2.50.0.tar.gz
-      dest: /tmp/graphviz-2.50.0.tar.gz
-      checksum: "sha256:e17021a510bbd2770d4ca4b4eb841138122aaa5948f9e617e6bc12b4bac62e8d"
   - name: Expand source files archive
     unarchive:
-      src: /tmp/graphviz-2.50.0.tar.gz
-      dest: /tmp/
+      src: /home/kasm-default-profile/install_files/graphviz-2.50.0.tar.gz
+      dest: /home/kasm-default-profile/install_files/
       remote_src: yes
-      creates: /tmp/graphviz-2.50.0/README
+      creates: /home/kasm-default-profile/install_files/graphviz-2.50.0/README
   - name: Build graphviz
     shell: 
       cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
-      creates:
-      chdir: /tmp/graphviz-2.50.0/
+      chdir: /home/kasm-default-profile/install_files/graphviz-2.50.0/
       executable: /bin/bash    
   - name: Get graphviz version
     shell: dot -V
     register: installed_graphviz_version
+  - name: install plantuml
+    copy:
+      src: /home/kasm-default-profile/install_files/plantuml.jar
+      dest: /usr/local/bin/plantuml.jar
+      remote_src: yes
   - name: Display JDK and GraphViz versions
     debug:
       msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
@@ -394,68 +396,27 @@
   tags: install_knowledge_tools
 
   tasks:
-  - name: Install flatpak
+  - name: install obsidian
     apt:
-      name: flatpak
-      update_cache: yes  
-  - name: Configure flatpak
-    shell:
-      cmd: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo    
-  - name: Install Obsidian
-    shell: 
-      cmd: flatpak install --system --assumeyes --noninteractive flathub md.obsidian.Obsidian    
-  - name: Set up Obsidian shortcut
-    shell:
-      cmd: cp /var/lib/flatpak/exports/share/applications/md.obsidian.Obsidian.desktop /usr/share/applications/md.obsidian.Obsidian.desktop && cp /var/lib/flatpak/exports/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png /usr/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png  
-  - name: Install JabRef
-    shell:
-      cmd: flatpak install --system --assumeyes --noninteractive flathub org.jabref.jabref
-  - name: Set up JabRef shortcut
-    shell:
-      cmd: cp /var/lib/flatpak/exports/share/applications/org.jabref.jabref.desktop /usr/share/applications/org.jabref.jabref.desktop && cp /var/lib/flatpak/exports/share/icons/hicolor/128x128/apps/org.jabref.jabref.png /usr/share/icons/hicolor/128x128/apps/org.jabref.jabref.png
+      deb: /home/kasm-default-profile/install_files/obsidian_0.13.31_amd64.deb
+      update_cache: yes
+  - name: install jabref
+    apt:
+      deb: /home/kasm-default-profile/install_files/jabref_5.5-1_amd64.deb
+      update_cache: yes
 
 -
-  # Install knowledge capture tools
+  # Install Pharo
   hosts: localhost
   connection: local
-  tags: install_gtk_pharo
-
-  vars:
-  - gtoolkit_zip: GlamorousToolkit-Linux-x86_64-v0.8.1322.zip
-  - gtoolkit_zip_path: "/home/kasm-default-profile/{{ gtoolkit_zip }}"
+  tags: install_pharo
 
   tasks:
-  - name: Download Glamourous Toolkit
-    get_url:
-      url: "https://dl.feenk.com/gt/{{ gtoolkit_zip }}"
-      dest: /home/kasm-default-profile/
-  - name: Create installation directory
-    file:
-      path: /home/kasm-default-profile/gtoolkit/
-      state: directory
-      mode: '0755'    
-  - name: Unzip Glamourous Toolkit
-    unarchive:
-      src: "{{ gtoolkit_zip_path }}"
-      dest: /home/kasm-default-profile/gtoolkit/
-      remote_src: yes
-  - name: Remove zip file
-    file:
-      path: "{{ gtoolkit_zip_path }}"
-      state: absent
-  - name: Download Pharo
-    get_url:
-      url: https://files.pharo.org/pharo-launcher/linux64
-      dest: /home/kasm-default-profile/
   - name: Unzip Pharo
     unarchive:
-      src: /home/kasm-default-profile/PharoLauncher-linux-2.3-x64.zip
+      src: /home/kasm-default-profile/install_files/PharoLauncher-linux-2.3-x64.zip
       dest: /home/kasm-default-profile/
       remote_src: yes
-  - name: Remove zip file
-    file:
-      path: /home/kasm-default-profile/PharoLauncher-linux-2.3-x64.zip
-      state: absent      
 
 -
   # install readers
