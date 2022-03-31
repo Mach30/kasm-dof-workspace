@@ -182,7 +182,7 @@
   tasks:
   - name: install TeX Live
     apt:
-      name: "texlive={{ texlive_version }}"  
+      name: "texlive={{ texlive_version }}, texlive-latex-extra"  
       update_cache: yes
     # https://mikefarah.gitbook.io/yq/  
   - name: Install yq
@@ -224,7 +224,6 @@
 
   vars:
     jdk_version: 2:1.11-72
-    jdk_version_expected: openjdk 11.0.14 2022-01-18
     graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
 
   tasks:
@@ -261,10 +260,6 @@
   - name: Display JDK and GraphViz versions
     debug:
       msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
-  - name: Test JDK version
-    fail:
-      msg: "JDK Version Error: Expected {{ jdk_version_expected }} | Found {{ installed_jdk_version.stdout }}"
-    when: installed_jdk_version.stdout != jdk_version_expected  
   - name: Test Graphviz version
     fail:
       msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
