@@ -340,8 +340,18 @@
 
   environment: 
     DONT_PROMPT_WSL_INSTALL: 1
+  tasks:
+  - name: Create Spell Right Dictionaries Folder
+    file:
+      path: /home/dev/.config/Code/Dictionaries
+      state: directory
+      mode: '0755'
+  - name: Link system dictionaries to Spell Right
+    shell:
+      cmd: ln -s /usr/share/hunspell/* /home/dev/.config/Code/Dictionaries  
   roles:
     - role: gantsign.visual-studio-code
+      visual_studio_code_version: "1.65.2*"
       users:
         - username: "dev"
           visual_studio_code_extensions:
@@ -350,6 +360,8 @@
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
             - samuelcolvin.jinjahtml
+            - CurlyBrackets.markdown-word-count
+            - ban.spellright
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
@@ -365,7 +377,16 @@
                 "args": ["-l"]
                 }
               },
-            "terminal.integrated.defaultProfile.linux": "bash (login)" 
+            "terminal.integrated.defaultProfile.linux": "bash (login)",
+            "markdown-word-count.selectionCount": true,
+            "spellright.language": [
+                "en_US"
+            ],
+            "spellright.documentTypes": [
+                "markdown",
+                "latex",
+                "plaintext"
+            ]  
           }  
 
 -
