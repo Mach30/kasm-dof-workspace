@@ -28,9 +28,13 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
 - Knowledge Capture Tools
-  - [Obsidian](https://obsidian.md/) v0.13.23
+  - [Obsidian](https://obsidian.md/) v0.14.6
   - [JabRef](https://www.jabref.org/) v5.5.6
 - [Glamorous Toolkit](https://gtoolkit.com/) and [Pharo](https://pharo.org/)
+- [Ontological Modeling Language (OML)](https://github.com/opencaesar/oml) Development Stack (based on [OML Tutorial Requirements](https://github.com/modelware/oml-tutorial))
+  - [Rosetta IDE](https://github.com/opencaesar/oml-rosetta) v1.0.7
+  - [R Language](https://www.r-project.org/) v4.1.3
+  - [R Studio](https://www.rstudio.com/) v2022.02.1-461
 - Content Viewers
     - Chrome
     - Firefox

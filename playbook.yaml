@@ -414,7 +414,7 @@
   tasks:
   - name: install obsidian
     apt:
-      deb: /home/kasm-default-profile/install_files/obsidian_0.13.31_amd64.deb
+      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
       update_cache: yes
   - name: install jabref
     apt:
