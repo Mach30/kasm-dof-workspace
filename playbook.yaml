@@ -121,7 +121,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.35.1"
+    git_version: "2.36.0"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -433,6 +433,46 @@
       src: /home/kasm-default-profile/install_files/PharoLauncher-linux-2.3-x64.zip
       dest: /home/kasm-default-profile/
       remote_src: yes
+
+#-
+#  # Install OML Tools
+#  hosts: localhost
+#  connection: local
+#  tags: install_oml
+#
+#  tasks:
+#  - name: Unzip Rosetta RCP
+#    unarchive:
+#      src: /home/kasm-default-profile/install_files/rosetta-1.0.7-linux.gtk.x86_64.zip
+#      dest: /usr/local/bin
+#      remote_src: yes
+#  - name: symlink Rosetta executable into /usr/local/bin/
+#    file:
+#      src: /usr/local/bin/Rosetta/Rosetta
+#      dest: /usr/local/bin/rosetta
+#      owner: root
+#      group: root
+#      state: link
+#  - name: Install R helper packages
+#    apt:
+#      name: software-properties-common, dirmngr
+#      update_cache: yes
+#      install_recommends: no
+#  - name: Add R repos signing key
+#    shell:
+#      cmd: wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+#  - name: Add the R 4.0 repo from CRAN
+#    shell:
+#      cmd: add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+#  - name: Install R
+#    apt:
+#      name: r-base
+#      update_cache: yes
+#      install_recommends: no
+#  - name: Install R Studio
+#    apt:
+#      deb: /home/kasm-default-profile/install_files/rstudio-2022.02.1-461-amd64.deb
+#      update_cache: yes
 
 -
   # install readers
