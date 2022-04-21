@@ -10,7 +10,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - npx v8.3.1 (included with nodejs)
     - yarn v1.22.11
 - Utilities
-    - git v2.35.1 with @capsulecorplab .gitconfig
+    - git v2.36.0 with @capsulecorplab .gitconfig
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
 - Artifact Generators
