@@ -121,7 +121,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.36.0"
+    git_version: "2.36.1"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -468,6 +468,10 @@
       name: software-properties-common, dirmngr
       update_cache: yes
       install_recommends: no
+  - name: Install OML tutorials R dependencies
+    apt:
+      name: libxml2-dev, libcurl4-openssl-dev, libssl-dev, gfortran, libblas-dev, liblapack-dev
+      update_cache: yes      
   - name: Add R repos signing key
     shell:
       cmd: wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
@@ -482,7 +486,7 @@
   - name: Install R Studio
     apt:
       deb: /home/kasm-default-profile/install_files/rstudio-2022.02.1-461-amd64.deb
-      update_cache: yes        
+      update_cache: yes          
 -
   # install readers
   hosts: localhost

@@ -35,6 +35,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
   - [Rosetta IDE](https://github.com/opencaesar/oml-rosetta) v1.0.7
   - [R Language](https://www.r-project.org/) v4.1.3
   - [R Studio](https://www.rstudio.com/) v2022.02.1-461
+    - **Note:** You must run the command `install.packages("xml2", dependencies = TRUE, INSTALL_opts = '--no-lock')` from within the R Studio Console before attempting to use the OML tutorial rmd files. (Based on [Stack Overflow](https://stackoverflow.com/questions/14382209/r-install-packages-returns-failed-to-create-lock-directory/14389028#14389028))
 - Content Viewers
     - Chrome
     - Firefox
