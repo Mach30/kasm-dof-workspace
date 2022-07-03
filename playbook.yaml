@@ -182,7 +182,7 @@
   tasks:
   - name: install TeX Live
     apt:
-      name: "texlive={{ texlive_version }}, texlive-latex-extra"  
+      name: "texlive-full={{ texlive_version }}"  
       update_cache: yes
     # https://mikefarah.gitbook.io/yq/  
   - name: Install yq
@@ -193,6 +193,10 @@
       owner: root
       group: root
       mode: '0755'
+  - name: Install pandoc-citeproc
+    apt: 
+      name: pandoc-citeproc
+      update_cache: yes        
   - name: Get pandoc version
     shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_pandoc_version
