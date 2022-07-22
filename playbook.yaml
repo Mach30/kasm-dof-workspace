@@ -490,7 +490,18 @@
   - name: Install R Studio
     apt:
       deb: /home/kasm-default-profile/install_files/rstudio-2022.02.1-461-amd64.deb
-      update_cache: yes          
+      update_cache: yes       
+  - name: Add Stardog aptkey
+    shell:
+      cmd: curl http://packages.stardog.com/stardog.gpg.pub | apt-key add
+  - name: Add stardog repo
+    shell:
+      cmd: echo "deb http://packages.stardog.com/deb/ stable main" >> /etc/apt/sources.list  
+  - name: Install stardog
+    apt:
+      name: stardog
+      update_cache: yes
+      install_recommends: yes        
 -
   # install readers
   hosts: localhost
