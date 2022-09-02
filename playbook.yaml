@@ -502,6 +502,19 @@
       name: stardog
       update_cache: yes
       install_recommends: yes        
+  - name: install startstardogserver.sh
+    copy:
+      src: /home/kasm-default-profile/install_files/startstardogserver.sh
+      dest: /opt/stardog/startstardogserver.sh
+      owner: stardog
+      group: stardog
+      mode: '0755'
+      remote_src: yes
+  - name: add startstardogserver.sh to PATH
+    lineinfile:
+      path: "/etc/skel/.profile"
+      line: 'PATH=$PATH:/opt/stardog'
+
 -
   # install readers
   hosts: localhost
