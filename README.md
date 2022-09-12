@@ -13,6 +13,12 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - git v2.36.0 with @capsulecorplab .gitconfig
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
+- Python Based Tools
+    - Jupyter Lab
+    - Juptyer Notebook
+    - Voila
+    - Pint
+    - LinkML    
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
@@ -27,6 +33,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
+    - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 - Knowledge Capture Tools
   - [Obsidian](https://obsidian.md/) v0.14.6
   - [JabRef](https://www.jabref.org/) v5.5.6
@@ -36,6 +43,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
   - [R Language](https://www.r-project.org/) v4.1.3
   - [R Studio](https://www.rstudio.com/) v2022.02.1-461
     - **Note:** You must run the command `install.packages("xml2", dependencies = TRUE, INSTALL_opts = '--no-lock')` from within the R Studio Console before attempting to use the OML tutorial rmd files. (Based on [Stack Overflow](https://stackoverflow.com/questions/14382209/r-install-packages-returns-failed-to-create-lock-directory/14389028#14389028))
+  - [Stardog](https://www.stardog.com/)  
 - Content Viewers
     - Chrome
     - Firefox
