@@ -166,7 +166,30 @@
       src: /home/kasm-default-profile/install_files/.gitconfig
       dest: /home/kasm-default-profile/.gitconfig
       remote_src: yes
-       
+-
+  # install Python packages with pip
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: install_python_based_tools
+
+  tasks:
+  - name: Update OS to point python to python3
+    apt:
+      name: python-is-python3
+      update_cache: yes
+  - name: Install python packages with pip
+    pip:
+      name:
+        - jupyterlab
+        - notebook
+        - voila
+        - pint
+        - linkml
+
+  roles:
+    - role: geerlingguy.pip
+
 -
   # install Pandoc & TexLive
   hosts: localhost
@@ -366,6 +389,7 @@
             - samuelcolvin.jinjahtml
             - CurlyBrackets.markdown-word-count
             - ban.spellright
+            - ms-python.python
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
