@@ -464,7 +464,7 @@
       mode: '0755'    
   - name: Unzip Glamourous Toolkit
     unarchive:
-      src: /home/kasm-default-profile/install_files/GlamorousToolkit-Linux-x86_64-v0.8.1322.zip
+      src: /home/kasm-default-profile/install_files/GlamorousToolkit-Linux-x86_64-v0.8.1957.zip
       dest: /home/kasm-default-profile/gtoolkit/
       remote_src: yes
   - name: Unzip Pharo
