@@ -185,6 +185,7 @@
         - notebook
         - voila
         - pint
+        - markupsafe
         - linkml
 
   roles:
