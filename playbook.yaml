@@ -185,7 +185,7 @@
         - notebook
         - voila
         - pint
-        - markupsafe
+        - jinja2==3.1.2
         - linkml
 
   roles:
