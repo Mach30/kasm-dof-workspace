@@ -326,6 +326,23 @@
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected        
 
+-
+  # install pycharm
+  hosts: localhost
+  connection: local
+  tags: install_pycharm
+
+  tasks:
+  - name: Unzip Pycharm
+    unarchive:
+      src: /home/kasm-default-profile/install_files/pycharm-community-2022.2.2.tar.gz
+      dest: /opt
+      remote_src: yes
+  - name: add pycharm.sh to PATH
+    lineinfile:
+      path: "/etc/skel/.profile"
+      line: 'PATH=$PATH:/opt/pycharm-community-2022.2.2/bin'
+
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
