@@ -27,7 +27,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
         - JDK v11
         - Graphviz 2.50 (built from source)
     - [AsciiDoctor](https://asciidoctor.org/) v2.0.17 with PlantUML and PDF support
-- VS Code with the following extensions
+- VS Code with the following extensions & pycharm
     - [Node.js Extension Pack](https://marketplace.visualstudio.com/items?itemName=waderyan.nodejs-extension-pack)
     - [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
