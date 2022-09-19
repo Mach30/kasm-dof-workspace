@@ -133,6 +133,10 @@
   - name: Install git
     apt:
       name: "git={{ git_version_to_install }}"  
+  - name: Install Git Bash Completion   
+    apt:
+      name: bash-completion
+      update_cache: yes 
   - name: Install Keychain
     apt:
       name: "keychain={{ keychain_version_to_install }}"
