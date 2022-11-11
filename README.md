@@ -10,9 +10,10 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - npx v8.3.1 (included with nodejs)
     - yarn v1.22.11
 - Utilities
-    - git v2.36.0 with @capsulecorplab .gitconfig
+    - git v2.39.0 with @capsulecorplab .gitconfig
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
+    - [yamllint](https://github.com/adrienverge/yamllint)
 - Python Based Tools
     - Jupyter Lab
     - Juptyer Notebook
@@ -34,6 +35,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+    - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - Knowledge Capture Tools
   - [Obsidian](https://obsidian.md/) v0.14.6
   - [JabRef](https://www.jabref.org/) v5.5.6

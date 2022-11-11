@@ -166,6 +166,10 @@
       cmd: keychain -V 2> >(grep -i keychain) 2> >(sed 's/[[:alpha:]|(|[:space:]]//g') | fgrep '*' | sed 's/[*~://]//g'
       executable: /bin/bash
     register: installed_keychain_version
+  - name: install yamllint
+    apt:
+      name: yamllint
+      update_cache: yes
   - name: Display git and keychain versions
     debug:
       msg: "git = {{ installed_git_version.stdout }} | keychain = {{ installed_keychain_version.stdout }}"
@@ -425,6 +429,7 @@
             - CurlyBrackets.markdown-word-count
             - ban.spellright
             - ms-python.python
+            - yzhang.markdown-all-in-one
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
