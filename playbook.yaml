@@ -438,21 +438,21 @@
       state: absent
       remove: yes    
 
--
-  # Install knowledge capture tools
-  hosts: localhost
-  connection: local
-  tags: install_knowledge_tools
-
-  tasks:
-  - name: install obsidian
-    apt:
-      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
-      update_cache: yes
-  - name: install jabref
-    apt:
-      deb: /home/kasm-default-profile/install_files/jabref_5.5-1_amd64.deb
-      update_cache: yes
+#-
+#  # Install knowledge capture tools
+#  hosts: localhost
+#  connection: local
+#  tags: install_knowledge_tools
+#
+#  tasks:
+#  - name: install obsidian
+#    apt:
+#      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
+#      update_cache: yes
+#  - name: install jabref
+#    apt:
+#      deb: /home/kasm-default-profile/install_files/jabref_5.5-1_amd64.deb
+#      update_cache: yes
 
 -
   # Install Pharo
@@ -479,7 +479,7 @@
 #      src: /home/kasm-default-profile/install_files/rosetta-1.0.7-linux.gtk.x86_64.zip
 #      dest: /usr/local/bin
 #      remote_src: yes
-#  - name: symlink Rosetta executable into /usr/local/bin/
+#  - name: symlink Rosetta executable into /usr/local/bin/    
 #    file:
 #      src: /usr/local/bin/Rosetta/Rosetta
 #      dest: /usr/local/bin/rosetta
@@ -491,6 +491,10 @@
 #      name: software-properties-common, dirmngr
 #      update_cache: yes
 #      install_recommends: no
+#  - name: Install OML tutorials R dependencies
+#    apt:
+#      name: libxml2-dev, libcurl4-openssl-dev, libssl-dev, gfortran, libblas-dev, liblapack-dev
+#      update_cache: yes      
 #  - name: Add R repos signing key
 #    shell:
 #      cmd: wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
@@ -505,7 +509,30 @@
 #  - name: Install R Studio
 #    apt:
 #      deb: /home/kasm-default-profile/install_files/rstudio-2022.02.1-461-amd64.deb
+#      update_cache: yes       
+#  - name: Add Stardog aptkey
+#    shell:
+#      cmd: curl http://packages.stardog.com/stardog.gpg.pub | apt-key add
+#  - name: Add stardog repo
+#    shell:
+#      cmd: echo "deb http://packages.stardog.com/deb/ stable main" >> /etc/apt/sources.list  
+#  - name: Install stardog
+#    apt:
+#      name: stardog
 #      update_cache: yes
+#      install_recommends: yes        
+#  - name: install startstardogserver.sh
+#    copy:
+#      src: /home/kasm-default-profile/install_files/startstardogserver.sh
+#      dest: /opt/stardog/startstardogserver.sh
+#      owner: stardog
+#      group: stardog
+#      mode: '0755'
+#      remote_src: yes
+#  - name: add startstardogserver.sh to PATH
+#    lineinfile:
+#      path: "/etc/skel/.profile"
+#      line: 'PATH=$PATH:/opt/stardog'
 
 -
   # install readers
