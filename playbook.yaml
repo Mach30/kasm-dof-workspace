@@ -316,6 +316,10 @@
   - name: Run gem install for asciidoctor
     shell: 
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
+  - name: Install hexapdf dependencies
+    apt:
+      name: libssl-dev
+      update_cache: yes
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
