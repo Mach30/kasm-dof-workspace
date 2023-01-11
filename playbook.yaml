@@ -318,7 +318,7 @@
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
   - name: Install hexapdf dependencies
     apt:
-      name: libssl-dev
+      name: build-essential, libssl-dev
       update_cache: yes
   - name: Install PlantUML and PDF support
     shell:
