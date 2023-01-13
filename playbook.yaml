@@ -51,6 +51,20 @@
 # Be sure to use the same hosts and connection entries above
 # addtional plays
 
+-
+  # Install build-essential
+  hosts: localhost
+  connection: local
+  tags:
+  - install_generator_plantuml
+  - install_generator_asciidoctor
+
+  tasks:
+  - name: Install build-essential
+    apt:
+      name: build-essential
+      update_cache: yes
+
 - 
   # Install NodeJS Tools
   hosts: localhost
@@ -268,7 +282,7 @@
     register: installed_jdk_version
   - name: Install pre-reqs to build graphviz
     apt:
-      name: build-essential, libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig 
+      name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
       update_cache: yes  
   - name: Expand source files archive
     unarchive:
@@ -318,7 +332,7 @@
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
   - name: Install hexapdf dependencies
     apt:
-      name: build-essential, libssl-dev
+      name: libssl-dev
       update_cache: yes
   - name: Install PlantUML and PDF support
     shell:
