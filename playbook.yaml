@@ -58,6 +58,7 @@
   tags:
   - install_generator_plantuml
   - install_generator_asciidoctor
+  - install_doctools
 
   tasks:
   - name: Install build-essential
@@ -70,7 +71,9 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_node
+  tags:
+  - install_node
+  - install_doctools
 
   vars:
     node_version: "16.14.0"
@@ -184,12 +187,15 @@
       src: /home/kasm-default-profile/install_files/.gitconfig
       dest: /home/kasm-default-profile/.gitconfig
       remote_src: yes
+
 -
   # install Python packages with pip
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_python_based_tools
+  tags:
+  - install_python_based_tools
+  - install_doctools
 
   tasks:
   - name: Update OS to point python to python3
@@ -214,7 +220,9 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_generator_pandoc
+  tags:
+  - install_generator_pandoc
+  - install_doctools
 
   vars:
     pandoc_version: "2.18"
@@ -266,7 +274,9 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_generator_plantuml
+  tags:
+  - install_generator_plantuml
+  - install_doctools
 
   vars:
     jdk_version: 2:1.11-72
@@ -316,7 +326,9 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_generator_asciidoctor
+  tags:
+  - install_generator_asciidoctor
+  - install_doctools
 
   vars:
     asciidoctor_version: 2.0.17
