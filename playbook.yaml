@@ -210,7 +210,7 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - linkml
+        - linkml==1.4.2
 
   roles:
     - role: geerlingguy.pip
