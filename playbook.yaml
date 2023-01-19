@@ -206,6 +206,10 @@
     apt:
       name: python-is-python3
       update_cache: yes
+  - name: Install pip for python3 with Apt
+    apt:
+      name: python3-pip
+      update_cache: yes
   - name: Install python packages with pip
     pip:
       name:
@@ -216,8 +220,8 @@
         - jinja2==3.1.2
         - linkml==1.4.2
 
-  roles:
-    - role: geerlingguy.pip
+#  roles:
+#    - role: geerlingguy.pip
 
 -
   # install Pandoc & TexLive
