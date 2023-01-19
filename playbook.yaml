@@ -219,6 +219,15 @@
         - pint
         - jinja2==3.1.2
         - linkml==1.4.2
+  - name: install & configure poetry
+    shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
+  - name: Create symlink to Poetry in /usr/local/bin/
+    file:
+      src: /opt/poetry/bin/poetry
+      dest: /usr/local/bin/poetry
+      owner: root
+      group: root
+      state: link
 
 #  roles:
 #    - role: geerlingguy.pip
