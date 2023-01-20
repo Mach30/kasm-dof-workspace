@@ -486,21 +486,23 @@
       state: absent
       remove: yes    
 
-#-
-#  # Install knowledge capture tools
-#  hosts: localhost
-#  connection: local
-#  tags: install_knowledge_tools
-#
-#  tasks:
+-
+  # Install knowledge capture tools
+  hosts: localhost
+  connection: local
+  tags: install_knowledge_tools
+
+  tasks:
 #  - name: install obsidian
 #    apt:
 #      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
 #      update_cache: yes
-#  - name: install jabref
-#    apt:
-#      deb: /home/kasm-default-profile/install_files/jabref_5.5-1_amd64.deb
-#      update_cache: yes
+  - name: Join jabref debian package from split files
+    shell: cat /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb.part* > /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb
+  - name: install jabref from deb
+    apt:
+      deb: /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb
+      update_cache: yes
 
 -
   # Install Pharo
