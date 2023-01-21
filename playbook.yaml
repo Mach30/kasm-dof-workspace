@@ -498,10 +498,10 @@
 #      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
 #      update_cache: yes
   - name: Join jabref debian package from split files
-    shell: cat /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb.part* > /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb
+    shell: cat /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb.part* > /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
   - name: install jabref from deb
     apt:
-      deb: /home/kasm-default-profile/install_files/jabref_5.6-1_amd64.deb
+      deb: /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
       update_cache: yes
 
 -
