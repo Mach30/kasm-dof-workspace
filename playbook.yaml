@@ -493,10 +493,10 @@
   tags: install_knowledge_tools
 
   tasks:
-#  - name: install obsidian
-#    apt:
-#      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
-#      update_cache: yes
+  - name: install obsidian
+    apt:
+      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
+      update_cache: yes
   - name: Join jabref debian package from split files
     shell: cat /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb.part* > /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
   - name: install jabref from deb
