@@ -33,6 +33,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
     - [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
     - [AsciiDoc support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
+    - [Dendron](https://marketplace.visualstudio.com/items?itemName=dendron.dendron)
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
