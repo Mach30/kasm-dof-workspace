@@ -381,7 +381,9 @@
   # install sudo for the vs-code role below 
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Install Sudo
@@ -398,7 +400,9 @@
 # add dev user to give vs code somewhere to install extensions
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Add WSL2 required variables to the environment
@@ -415,7 +419,9 @@
   # install the remainder of the tools
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   environment: 
     DONT_PROMPT_WSL_INSTALL: 1
@@ -438,6 +444,7 @@
             - redhat.vscode-yaml
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
+            - dendron.dendron
             - samuelcolvin.jinjahtml
             - CurlyBrackets.markdown-word-count
             - ban.spellright
@@ -474,7 +481,9 @@
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Copy VS Code changes to kasm-default-profile
