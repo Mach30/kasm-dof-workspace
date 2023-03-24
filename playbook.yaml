@@ -213,6 +213,7 @@
   - name: Install python packages with pip
     pip:
       name:
+        - jupyter_server==1.23.6
         - jupyterlab
         - notebook
         - voila
