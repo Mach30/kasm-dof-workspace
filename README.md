@@ -38,7 +38,6 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - Knowledge Capture Tools
-  - [Obsidian](https://obsidian.md/) v0.14.6
   - [JabRef](https://www.jabref.org/) v5.5.6
 - [Pharo](https://pharo.org/)
 - Content Viewers
