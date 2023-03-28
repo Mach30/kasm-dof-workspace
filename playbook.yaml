@@ -509,6 +509,10 @@
     apt:
       deb: /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
       update_cache: yes
+  - name: install xclip (used for copy/pasting images in dendron)
+    apt:
+      name: xclip
+      update_cache: yes
 
 -
   # Install Pharo
