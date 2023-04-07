@@ -367,7 +367,7 @@
   - install_doctools
 
   vars:
-    asciidoctor_version: 2.0.17
+    asciidoctor_version: 2.0.18
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
 
   tasks:
