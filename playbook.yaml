@@ -138,7 +138,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.39.1"
+    git_version: "2.40.0"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -213,6 +213,7 @@
   - name: Install python packages with pip
     pip:
       name:
+        - jupyter_server==1.23.6
         - jupyterlab
         - notebook
         - voila
@@ -381,7 +382,9 @@
   # install sudo for the vs-code role below 
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Install Sudo
@@ -398,7 +401,9 @@
 # add dev user to give vs code somewhere to install extensions
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Add WSL2 required variables to the environment
@@ -415,7 +420,9 @@
   # install the remainder of the tools
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   environment: 
     DONT_PROMPT_WSL_INSTALL: 1
@@ -438,6 +445,7 @@
             - redhat.vscode-yaml
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
+            - dendron.dendron
             - samuelcolvin.jinjahtml
             - CurlyBrackets.markdown-word-count
             - ban.spellright
@@ -474,7 +482,9 @@
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
   hosts: localhost
   connection: local
-  tags: install_vscode
+  tags:
+  - install_vscode
+  - install_knowledge_tools
 
   tasks:
   - name: Copy VS Code changes to kasm-default-profile
@@ -493,15 +503,15 @@
   tags: install_knowledge_tools
 
   tasks:
-  - name: install obsidian
-    apt:
-      deb: /home/kasm-default-profile/install_files/obsidian_0.14.6_amd64.deb
-      update_cache: yes
   - name: Join jabref debian package from split files
     shell: cat /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb.part* > /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
   - name: install jabref from deb
     apt:
       deb: /home/kasm-default-profile/install_files/jabref_5.9_amd64.deb
+      update_cache: yes
+  - name: install xclip (used for copy/pasting images in dendron)
+    apt:
+      name: xclip
       update_cache: yes
 
 -
