@@ -76,16 +76,18 @@
   - install_doctools
 
   vars:
-    node_version: "16.14.0"
+    node_version: "18.5.0"
     v_node_version: "v{{ node_version }}"
-    npm_version: "8.3.1"
-    npx_version: "8.3.1"
-    yarn_version: "1.22.11"
-    yo_version: "4.3.0"
-    generator_code_version: "1.6.7"
+    npm_version: "8.12.1"
+    npx_version: "8.12.1"
+    yarn_version: "3.5.0"
+    yo_version: "4.3.1"
+    generator_code_version: "1.7.5"
 
 
   tasks:   # Test Node JS Tools versions
+  - name: Install Yarn
+    shell: "corepack enable && corepack prepare yarn@{{ yarn_version }} --activate"
   - name: Get node version
     shell: node --version
     register: installed_node_version
@@ -120,11 +122,9 @@
 
   roles:
   - role: grzegorznowak.nvm_node
-    nvm_install_script_version: "0.39.1"  
+    nvm_install_script_version: "0.39.3"
     nvm_node_version: "{{ node_version }}"  
     nvm_install_globally:
-    - name: yarn
-      version: "{{ yarn_version }}"
     - name: yo
       version: "{{ yo_version }}"
     - name: generator-code
