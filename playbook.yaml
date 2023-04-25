@@ -220,6 +220,7 @@
         - pint
         - jinja2==3.1.2
         - linkml==1.4.2
+        - black[jupyter]
   - name: install & configure poetry
     shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
   - name: Create symlink to Poetry in /usr/local/bin/
@@ -451,6 +452,7 @@
             - ban.spellright
             - ms-python.python
             - yzhang.markdown-all-in-one
+            - ms-python.black-formatter
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
@@ -475,7 +477,12 @@
                 "markdown",
                 "latex",
                 "plaintext"
-            ]  
+            ],
+            "python.formatting.provider": "none",
+            "[python]": {
+              "editor.defaultFormatter": "ms-python.black-formatter",
+              "editor.formatOnSave": true
+            }
           }  
 
 -
