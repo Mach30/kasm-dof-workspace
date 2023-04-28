@@ -455,7 +455,7 @@
       cmd: ln -s /usr/share/hunspell/* /home/dev/.config/Code/Dictionaries  
   roles:
     - role: gantsign.visual-studio-code
-      visual_studio_code_version: "1.65.2*"
+      visual_studio_code_version: "1.77.3*"
       users:
         - username: "dev"
           visual_studio_code_extensions:
