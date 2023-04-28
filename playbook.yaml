@@ -191,6 +191,23 @@
       src: /home/kasm-default-profile/install_files/.gitconfig
       dest: /home/kasm-default-profile/.gitconfig
       remote_src: yes
+  - name: Join gradle v8.1.1 zip file from split files
+    shell: cat /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip.parta* > /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+  - name: Create gradle directory
+    file:
+      path: /opt/gradle
+      state: directory
+      mode: '0755'
+  - name: Unzip gradle binary
+    unarchive:
+      src: /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+      dest: /opt/gradle/
+      remote_src: yes
+      creates: /opt/gradle/gradle-8.1.1/LICENSE
+  - name: add gradle to PATH
+    lineinfile:
+      path: "/etc/skel/.profile"
+      line: 'PATH=$PATH:/opt/gradle/gradle-8.1.1/bin'
 
 -
   # install Python packages with pip
