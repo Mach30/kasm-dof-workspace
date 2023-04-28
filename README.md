@@ -5,15 +5,15 @@
 This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeling Language](https://github.com/Mach30/m30ml), [Mach 30 Project Manager](https://github.com/Mach30/m30mlTools), the [Distributed OSHW Framework (DOF)](https://github.com/Mach30/dof), and [Sliderule](https://github.com/Mach30/sliderule) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - Node JS Tools
-    - nodejs v16.14.0
-    - npm v8.3.1 (included with nodejs)
-    - npx v8.3.1 (included with nodejs)
-    - yarn v1.22.11
+    - nodejs v18.5.0
+    - npm v8.12.1 (included with nodejs)
+    - npx v8.12.1 (included with nodejs)
+    - yarn v3.5.0
 - Utilities
-    - git v2.39.0 with @capsulecorplab .gitconfig
+    - git v2.40.1 with @capsulecorplab .gitconfig
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
-    - [yamllint](https://github.com/adrienverge/yamllint)
+    - [yamllint](https://github.com/adrienverge/yamllint) v1.31.0
 - Python Based Tools
     - Jupyter Lab
     - Juptyer Notebook
@@ -23,11 +23,11 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
-    - [yq](https://mikefarah.gitbook.io/yq/) v4.20.2
+    - [yq](https://mikefarah.gitbook.io/yq/) v4.33.2
     - [PlantUML](https://plantuml.com/)
         - JDK v11
         - Graphviz 2.50 (built from source)
-    - [AsciiDoctor](https://asciidoctor.org/) v2.0.17 with PlantUML and PDF support
+    - [AsciiDoctor](https://asciidoctor.org/) v2.0.18 with PlantUML and PDF support
 - VS Code with the following extensions
     - [Node.js Extension Pack](https://marketplace.visualstudio.com/items?itemName=waderyan.nodejs-extension-pack)
     - [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
