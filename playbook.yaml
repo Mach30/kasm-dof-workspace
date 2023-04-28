@@ -166,10 +166,6 @@
       cmd: keychain -V 2> >(grep -i keychain) 2> >(sed 's/[[:alpha:]|(|[:space:]]//g') | fgrep '*' | sed 's/[*~://]//g'
       executable: /bin/bash
     register: installed_keychain_version
-  - name: install yamllint
-    apt:
-      name: yamllint
-      update_cache: yes
   - name: Display git and keychain versions
     debug:
       msg: "git = {{ installed_git_version.stdout }} | keychain = {{ installed_keychain_version.stdout }}"
@@ -240,6 +236,7 @@
         - jinja2==3.1.2
         - linkml==1.4.2
         - black[jupyter]
+        - yamllint==1.31.0
   - name: install & configure poetry
     shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
   - name: Create symlink to Poetry in /usr/local/bin/
