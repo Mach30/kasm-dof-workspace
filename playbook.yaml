@@ -76,16 +76,18 @@
   - install_doctools
 
   vars:
-    node_version: "16.14.0"
+    node_version: "18.5.0"
     v_node_version: "v{{ node_version }}"
-    npm_version: "8.3.1"
-    npx_version: "8.3.1"
-    yarn_version: "1.22.11"
-    yo_version: "4.3.0"
-    generator_code_version: "1.6.7"
+    npm_version: "8.12.1"
+    npx_version: "8.12.1"
+    yarn_version: "3.5.0"
+    yo_version: "4.3.1"
+    generator_code_version: "1.7.5"
 
 
   tasks:   # Test Node JS Tools versions
+  - name: Install Yarn
+    shell: "corepack enable && corepack prepare yarn@{{ yarn_version }} --activate"
   - name: Get node version
     shell: node --version
     register: installed_node_version
@@ -120,11 +122,9 @@
 
   roles:
   - role: grzegorznowak.nvm_node
-    nvm_install_script_version: "0.39.1"  
+    nvm_install_script_version: "0.39.3"
     nvm_node_version: "{{ node_version }}"  
     nvm_install_globally:
-    - name: yarn
-      version: "{{ yarn_version }}"
     - name: yo
       version: "{{ yo_version }}"
     - name: generator-code
@@ -166,10 +166,6 @@
       cmd: keychain -V 2> >(grep -i keychain) 2> >(sed 's/[[:alpha:]|(|[:space:]]//g') | fgrep '*' | sed 's/[*~://]//g'
       executable: /bin/bash
     register: installed_keychain_version
-  - name: install yamllint
-    apt:
-      name: yamllint
-      update_cache: yes
   - name: Display git and keychain versions
     debug:
       msg: "git = {{ installed_git_version.stdout }} | keychain = {{ installed_keychain_version.stdout }}"
@@ -180,7 +176,9 @@
   - name: Test keychain version
     fail:
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
-    when: installed_keychain_version.stdout != keychain_version_expected   
+    when: installed_keychain_version.stdout != keychain_version_expected
+  - name: auto-launch keychain in shell, if ssh keys exists
+    shell: echo 'if [ -r ~/.ssh/id_ed25519 ]; then\n    eval `keychain --eval id_ed25519`\nfi' >> /home/kasm-default-profile/.bashrc
   - name: Install @capsulecorplab .vimrc
     copy:
       src: /home/kasm-default-profile/install_files/.vimrc
@@ -238,6 +236,7 @@
         - jinja2==3.1.2
         - linkml==1.4.2
         - black[jupyter]
+        - yamllint==1.31.0
   - name: install & configure poetry
     shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
   - name: Create symlink to Poetry in /usr/local/bin/
@@ -367,7 +366,7 @@
   - install_doctools
 
   vars:
-    asciidoctor_version: 2.0.17
+    asciidoctor_version: 2.0.18
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
 
   tasks:
