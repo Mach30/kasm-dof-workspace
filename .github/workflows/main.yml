@@ -56,13 +56,13 @@ jobs:
           password: ${{ secrets.GHCR_AUTH_TOKEN }}
 
       - name: Build image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4.0.0
         with:
           tags: ${{ steps.docker_meta.outputs.tags }} 
           file: ./Dockerfile
           
       - name: Push image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4.0.0
         with:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
