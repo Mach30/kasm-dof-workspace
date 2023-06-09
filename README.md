@@ -20,7 +20,8 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - Juptyer Notebook
     - Voila
     - Pint
-    - LinkML    
+    - LinkML
+    - Poetry (latest)
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
