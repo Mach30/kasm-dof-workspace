@@ -1,5 +1,7 @@
 # Mach 30 Distributed OSHW Framework Workspace (Kasm Image)
 
+![Screenshot from 2023-06-09 15-21-34](https://github.com/Mach30/kasm-dof-workspace/assets/14095576/f1dce491-614c-4c30-ae0d-756c33f1f31a)
+
 ## Introduction
 
 This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeling Language](https://github.com/Mach30/m30ml), [Mach 30 Project Manager](https://github.com/Mach30/m30mlTools), the [Distributed OSHW Framework (DOF)](https://github.com/Mach30/dof), and [Sliderule](https://github.com/Mach30/sliderule) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
