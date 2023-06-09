@@ -2,12 +2,18 @@
 
 changelog:
   categories:
-    - title: 🏕 Features
+    - title: Breaking changes
       labels:
-        - '*'
-      exclude:
-        labels:
-          - dependencies
-    - title: 👒 Dependencies
+        - breaking-change
+    - title: Enhancements
       labels:
-        - dependencies
+        - enhancement
+    - title: Bug fixes
+      labels:
+        - bug
+    - title: Maintenance
+      labels:
+        - maintenance
+    - title: Documentation
+      labels:
+        - documentation
