@@ -83,7 +83,7 @@
     yarn_version: "3.5.0"
     yo_version: "4.3.1"
     generator_code_version: "1.7.5"
-
+    oclif_version: "3.9.1"
 
   tasks:   # Test Node JS Tools versions
   - name: Install Yarn
@@ -100,9 +100,15 @@
   - name: Get yarn version
     shell: yarn --version
     register: installed_yarn_version    
+  - name: Get oclif version
+    shell: oclif --version 2>/dev/null | sed 's/\ /\n/g' | grep oclif | sed 's/\///g' | sed 's/[[:alpha:]|(|[:space:]]//g'
+    register: installed_oclif_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
+  - name: Display oclif versions
+    debug:
+      msg: "oclif = {{ installed_oclif_version.stdout }}"
   - name: Test node version
     fail:
       msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
@@ -118,7 +124,11 @@
   - name: Test yarn version
     fail:
       msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
-    when: installed_yarn_version.stdout != yarn_version        
+    when: installed_yarn_version.stdout != yarn_version
+  - name: Test oclif version
+    fail:
+      msg: "oclif Version Error: Expected {{ oclif_version }} | Found {{ installed_oclif_version.stdout }}"
+    when: installed_oclif_version.stdout != oclif_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -128,7 +138,9 @@
     - name: yo
       version: "{{ yo_version }}"
     - name: generator-code
-      version: "{{ generator_code_version }}"    
+      version: "{{ generator_code_version }}"
+    - name: oclif
+      version: "{{ oclif_version }}"
 
 -
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
