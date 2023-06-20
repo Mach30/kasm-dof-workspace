@@ -100,9 +100,15 @@
   - name: Get yarn version
     shell: yarn --version
     register: installed_yarn_version    
+  - name: Get TypeScript Compiler version
+    shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
+    register: installed_tsc_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
+  - name: Display TypeScript Compiler version
+    debug:
+      msg: "tsc = {{ installed_tsc_version.stdout }}"
   - name: Test node version
     fail:
       msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
@@ -119,6 +125,10 @@
     fail:
       msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
     when: installed_yarn_version.stdout != yarn_version        
+  - name: Test TypeScript Compiler version
+    fail:
+      msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
+    when: installed_tsc_version.stdout != typescript_version
 
   roles:
   - role: grzegorznowak.nvm_node
