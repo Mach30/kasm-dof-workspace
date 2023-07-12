@@ -258,7 +258,7 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - linkml==1.4.2
+        - linkml==1.5.6
         - black[jupyter]
         - yamllint==1.31.0
   - name: install & configure poetry
