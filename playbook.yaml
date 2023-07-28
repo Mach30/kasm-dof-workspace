@@ -150,7 +150,6 @@
       version: "{{ generator_code_version }}"
     - name: oclif
       version: "{{ oclif_version }}"
-      version: "{{ generator_code_version }}"    
     - name: typescript
       version: "{{ typescript_version }}"
 
