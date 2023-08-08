@@ -83,7 +83,7 @@
     yarn_version: "3.5.0"
     yo_version: "4.3.1"
     generator_code_version: "1.7.5"
-    oclif_version: "3.9.1"
+    oclif_version: "3.10.0"
     typescript_version: "5.1.3"
 
   tasks:   # Test Node JS Tools versions
@@ -150,7 +150,6 @@
       version: "{{ generator_code_version }}"
     - name: oclif
       version: "{{ oclif_version }}"
-      version: "{{ generator_code_version }}"    
     - name: typescript
       version: "{{ typescript_version }}"
 
@@ -258,7 +257,7 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - linkml==1.4.2
+        - linkml==1.5.6
         - black[jupyter]
         - yamllint==1.31.0
   - name: install & configure poetry
