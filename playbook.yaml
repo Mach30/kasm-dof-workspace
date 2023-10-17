@@ -85,6 +85,7 @@
     generator_code_version: "1.7.5"
     oclif_version: "3.10.0"
     typescript_version: "5.1.3"
+    npm_cli_login_version: "1.0.0"
 
   tasks:   # Test Node JS Tools versions
   - name: Install Yarn
@@ -152,6 +153,8 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: npm-cli-login
+      version: "{{ npm_cli_login_version }}"
 
 -
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
