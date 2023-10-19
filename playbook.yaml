@@ -648,7 +648,9 @@
   # install readers
   hosts: localhost
   connection: local
-  tags: install_readers
+  tags:
+  - install_readers
+  - install_firefox
 
   tasks:
   - name: install Evince
@@ -656,9 +658,34 @@
       name: evince
       update_cache: yes
 
+  # install firefox
+
+  vars:
+    firefox_profiles:
+      default:
+        extensions:
+          - ublock-origin
+        preferences:
+          network.cookie.cookieBehavior: 1
+          privacy.donottrackheader.enabled: true
+          datareporting.healthreport.uploadEnabled: false
+      secondprofile:
+        extensions:
+          - adblock-plus
+        preferences:
+          privacy.donottrackheader.enabled: false
+          privacy.trackingprotection.enabled: false
+          signon.rememberSignons: false
+          datareporting.healthreport.uploadEnabled: false
+
+  pre_tasks:
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+
   roles:
   - role: webarchitect609.google_chrome
-  - role: do1jlr.install_firefox
+  - role: staticdev.firefox
 
 # Three dots indicate the end of a YAML document
 ...
