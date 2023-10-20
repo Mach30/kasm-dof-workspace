@@ -5,6 +5,6 @@
 - andrewrothstein.pandoc              # https://galaxy.ansible.com/andrewrothstein/pandoc
 - gantsign.visual-studio-code         # https://galaxy.ansible.com/gantsign/visual-studio-code
 - webarchitect609.google_chrome       # https://galaxy.ansible.com/webarchitect609/google_chrome
-- do1jlr.install_firefox              # https://galaxy.ansible.com/do1jlr/install_firefox
+- staticdev.firefox                   # https://galaxy.ansible.com/staticdev/firefox
 #- geerlingguy.pip                     # https://galaxy.ansible.com/geerlingguy/pip
 ...
