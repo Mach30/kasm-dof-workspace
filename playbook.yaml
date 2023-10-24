@@ -85,6 +85,7 @@
     generator_code_version: "1.7.5"
     oclif_version: "3.10.0"
     typescript_version: "5.1.3"
+    npm_cli_login_version: "1.0.0"
 
   tasks:   # Test Node JS Tools versions
   - name: Install Yarn
@@ -152,6 +153,8 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: npm-cli-login
+      version: "{{ npm_cli_login_version }}"
 
 -
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
@@ -161,7 +164,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.41.0"
+    git_version: "2.42.0"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -645,7 +648,9 @@
   # install readers
   hosts: localhost
   connection: local
-  tags: install_readers
+  tags:
+  - install_readers
+  - install_firefox
 
   tasks:
   - name: install Evince
@@ -653,9 +658,34 @@
       name: evince
       update_cache: yes
 
+  # install firefox
+
+  vars:
+    firefox_profiles:
+      default:
+        extensions:
+          - ublock-origin
+        preferences:
+          network.cookie.cookieBehavior: 1
+          privacy.donottrackheader.enabled: true
+          datareporting.healthreport.uploadEnabled: false
+      secondprofile:
+        extensions:
+          - adblock-plus
+        preferences:
+          privacy.donottrackheader.enabled: false
+          privacy.trackingprotection.enabled: false
+          signon.rememberSignons: false
+          datareporting.healthreport.uploadEnabled: false
+
+  pre_tasks:
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+
   roles:
   - role: webarchitect609.google_chrome
-  - role: do1jlr.install_firefox
+  - role: staticdev.firefox
 
 # Three dots indicate the end of a YAML document
 ...
