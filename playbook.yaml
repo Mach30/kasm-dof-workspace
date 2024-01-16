@@ -83,8 +83,10 @@
     yarn_version: "3.5.0"
     yo_version: "4.3.1"
     generator_code_version: "1.7.5"
-    oclif_version: "3.9.1"
+    oclif_version: "3.10.0"
     typescript_version: "5.1.3"
+    npm_cli_login_version: "1.0.0"
+    cli_njk_version: "1.0.0"
 
   tasks:   # Test Node JS Tools versions
   - name: Install Yarn
@@ -107,12 +109,18 @@
   - name: Get TypeScript Compiler version
     shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_tsc_version
+  - name: Get cli-njk version
+    shell: njk --version
+    register: installed_cli_njk_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
   - name: Display TypeScript Compiler version
     debug:
       msg: "tsc = {{ installed_tsc_version.stdout }}"
+  - name: Display cli-njk version
+    debug:
+      msg: "cli-njk = {{ installed_cli_njk_version.stdout }}"
   - name: Test node version
     fail:
       msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
@@ -138,6 +146,10 @@
     fail:
       msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
     when: installed_tsc_version.stdout != typescript_version
+  - name: Test cli-njk version
+    fail:
+      msg: "cli-njk Version Error: Expected {{ cli_njk_version }} | Found {{ installed_cli_njk_version.stdout }}"
+    when: installed_cli_njk_version.stdout != cli_njk_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -150,9 +162,12 @@
       version: "{{ generator_code_version }}"
     - name: oclif
       version: "{{ oclif_version }}"
-      version: "{{ generator_code_version }}"    
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: npm-cli-login
+      version: "{{ npm_cli_login_version }}"
+    - name: cli-njk
+      version: "{{ cli_njk_version }}"
 
 -
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
@@ -162,7 +177,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.41.0"
+    git_version: "2.42.0"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -258,8 +273,7 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - git+https://github.com/Mach30/linkml.git@d2df9685ff69e476a3f443fd59b75506c3d353e1#egg=linkml
-        - git+https://github.com/Mach30/linkml-runtime.git@8d831e3b4c4b5893986752201717b726f788cea3#egg=linkml-runtime
+        - linkml==1.5.6
         - black[jupyter]
         - yamllint==1.31.0
   - name: install & configure poetry
@@ -647,7 +661,9 @@
   # install readers
   hosts: localhost
   connection: local
-  tags: install_readers
+  tags:
+  - install_readers
+  - install_firefox
 
   tasks:
   - name: install Evince
@@ -655,9 +671,34 @@
       name: evince
       update_cache: yes
 
+  # install firefox
+
+  vars:
+    firefox_profiles:
+      default:
+        extensions:
+          - ublock-origin
+        preferences:
+          network.cookie.cookieBehavior: 1
+          privacy.donottrackheader.enabled: true
+          datareporting.healthreport.uploadEnabled: false
+      secondprofile:
+        extensions:
+          - adblock-plus
+        preferences:
+          privacy.donottrackheader.enabled: false
+          privacy.trackingprotection.enabled: false
+          signon.rememberSignons: false
+          datareporting.healthreport.uploadEnabled: false
+
+  pre_tasks:
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+
   roles:
   - role: webarchitect609.google_chrome
-  - role: do1jlr.install_firefox
+  - role: staticdev.firefox
 
 # Three dots indicate the end of a YAML document
 ...

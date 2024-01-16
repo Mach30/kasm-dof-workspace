@@ -11,6 +11,8 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - npm v8.12.1 (included with nodejs)
     - npx v8.12.1 (included with nodejs)
     - yarn v3.5.0
+    - oclif v3.10.0
+    - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
 - Utilities
     - git v2.40.1 with @capsulecorplab .gitconfig
     - [gradle v8.1.1](https://docs.gradle.org/8.1.1/release-notes.html)
@@ -22,7 +24,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - Juptyer Notebook
     - Voila
     - Pint
-    - LinkML
+    - LinkML v1.5.6
     - Poetry (latest)
 - Artifact Generators
     - [Pandoc](https://pandoc.org/) v2.17.0.1
