@@ -188,7 +188,7 @@
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
     apt:
-      name: "git={{ git_version_to_install }}"  
+      name: "git"  
   - name: Install Git Bash Completion   
     apt:
       name: bash-completion
