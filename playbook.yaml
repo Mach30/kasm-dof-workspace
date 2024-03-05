@@ -78,8 +78,8 @@
   vars:
     node_version: "20.11.1"
     v_node_version: "v{{ node_version }}"
-    npm_version: "8.12.1"
-    npx_version: "8.12.1"
+    npm_version: "10.2.4"
+    npx_version: "10.2.4"
     yarn_version: "3.5.0"
     yo_version: "4.3.1"
     generator_code_version: "1.7.5"
