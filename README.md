@@ -7,14 +7,14 @@
 This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeling Language](https://github.com/Mach30/m30ml), [Mach 30 Project Manager](https://github.com/Mach30/m30mlTools), the [Distributed OSHW Framework (DOF)](https://github.com/Mach30/dof), and [Sliderule](https://github.com/Mach30/sliderule) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - Node JS Tools
-    - nodejs v18.5.0
-    - npm v8.12.1 (included with nodejs)
-    - npx v8.12.1 (included with nodejs)
+    - nodejs v20.11.1
+    - npm v10.2.4 (included with nodejs)
+    - npx v10.2.4 (included with nodejs)
     - yarn v3.5.0
     - oclif v3.10.0
     - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
 - Utilities
-    - git v2.43.0 with @capsulecorplab .gitconfig
+    - git v2.25.1 with @capsulecorplab .gitconfig
     - [gradle v8.1.1](https://docs.gradle.org/8.1.1/release-notes.html)
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
