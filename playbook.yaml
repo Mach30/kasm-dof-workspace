@@ -182,6 +182,7 @@
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
     keychain_version_expected: "{{ keychain_version }}.."
+    gradle_version: "8.7"
 
   tasks:
   - name: Add git PPA
@@ -228,8 +229,8 @@
       src: /home/kasm-default-profile/install_files/.gitconfig
       dest: /home/kasm-default-profile/.gitconfig
       remote_src: yes
-  - name: Join gradle v8.1.1 zip file from split files
-    shell: cat /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip.parta* > /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+  - name: Join gradle v{{ gradle_version }} zip file from split files
+    shell: cat /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip.parta* > /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip
   - name: Create gradle directory
     file:
       path: /opt/gradle
@@ -237,14 +238,14 @@
       mode: '0755'
   - name: Unzip gradle binary
     unarchive:
-      src: /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+      src: /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip
       dest: /opt/gradle/
       remote_src: yes
-      creates: /opt/gradle/gradle-8.1.1/LICENSE
+      creates: /opt/gradle/gradle-{{ gradle_version }}/LICENSE
   - name: add gradle to PATH
     lineinfile:
       path: "/etc/skel/.profile"
-      line: 'PATH=$PATH:/opt/gradle/gradle-8.1.1/bin'
+      line: 'PATH=$PATH:/opt/gradle/gradle-{{ gradle_version }}/bin'
 
 -
   # install Python packages with pip
