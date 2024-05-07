@@ -242,10 +242,13 @@
       dest: /opt/gradle/
       remote_src: yes
       creates: /opt/gradle/gradle-{{ gradle_version }}/LICENSE
-  - name: add gradle to PATH
-    lineinfile:
-      path: "/etc/skel/.profile"
-      line: 'PATH=$PATH:/opt/gradle/gradle-{{ gradle_version }}/bin'
+  - name: Create symlink to gradle in /usr/local/bin/
+    file:
+      src: /opt/gradle/gradle-{{ gradle_version }}/bin/gradle
+      dest: /usr/local/bin/gradle
+      owner: root
+      group: root
+      state: link
 
 -
   # install Python packages with pip
