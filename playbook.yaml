@@ -212,7 +212,7 @@
   - name: Test git version
     fail:
       msg: "Git Version Error: Expected {{ git_version }} | Found {{ installed_git_version.stdout }}"
-    when: installed_git_version.stdout != git_version  
+    when: installed_git_version.stdout != git_version
   - name: Test keychain version
     fail:
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
@@ -249,6 +249,16 @@
       owner: root
       group: root
       state: link
+  - name: Get gradle version
+    shell: gradle --version | grep Gradle | awk '{ print $2 '}
+    register: installed_gradle_version
+  - name: Display gradle versions
+    debug:
+      msg: "gradle = {{ installed_gradle_version.stdout }}"
+  - name: Test gradle version
+    fail:
+      msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
+    when: installed_gradle_version.stdout != gradle_version
 
 -
   # install Python packages with pip
