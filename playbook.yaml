@@ -250,9 +250,9 @@
       group: root
       state: link
   - name: Get gradle version
-    shell: gradle --version | grep Gradle | awk '{ print $2 '}
+    shell: gradle --version
     register: installed_gradle_version
-  - name: Display gradle versions
+  - name: Display gradle version
     debug:
       msg: "gradle = {{ installed_gradle_version.stdout }}"
   - name: Test gradle version
