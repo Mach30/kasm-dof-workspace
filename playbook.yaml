@@ -170,6 +170,58 @@
       version: "{{ cli_njk_version }}"
 
 -
+  # install PlantUML
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+  - install_generator_plantuml
+  - install_doctools
+
+  vars:
+    jdk_version: 2:1.11-72
+    graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
+
+  tasks:
+  - name: Install JDK
+    apt:
+      name: "default-jdk={{ jdk_version }}"
+      update_cache: yes
+  - name: Get JDK Version
+    shell: java --version | grep -m 1 -i openjdk
+    register: installed_jdk_version
+  - name: Install pre-reqs to build graphviz
+    apt:
+      name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
+      update_cache: yes  
+  - name: Expand source files archive
+    unarchive:
+      src: /home/kasm-default-profile/install_files/graphviz-2.50.0.tar.gz
+      dest: /home/kasm-default-profile/install_files/
+      remote_src: yes
+      creates: /home/kasm-default-profile/install_files/graphviz-2.50.0/README
+  - name: Build graphviz
+    shell: 
+      cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
+      chdir: /home/kasm-default-profile/install_files/graphviz-2.50.0/
+      executable: /bin/bash    
+  - name: Get graphviz version
+    shell: dot -V
+    register: installed_graphviz_version
+  - name: install plantuml
+    copy:
+      src: /home/kasm-default-profile/install_files/plantuml.jar
+      dest: /usr/local/bin/plantuml.jar
+      remote_src: yes
+  - name: Display JDK and GraphViz versions
+    debug:
+      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
+  - name: Test Graphviz version
+    fail:
+      msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
+    when: installed_graphviz_version.stderr != graphviz_version_expected        
+
+-
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
   hosts: localhost
   connection: local
@@ -356,58 +408,6 @@
   roles:
   - role: andrewrothstein.pandoc
     pandoc_ver: "{{ pandoc_version }}"
-
--
-  # install PlantUML
-  hosts: localhost
-  connection: local
-  gather_facts: yes
-  tags:
-  - install_generator_plantuml
-  - install_doctools
-
-  vars:
-    jdk_version: 2:1.11-72
-    graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
-
-  tasks:
-  - name: Install JDK
-    apt:
-      name: "default-jdk={{ jdk_version }}"
-      update_cache: yes
-  - name: Get JDK Version
-    shell: java --version | grep -m 1 -i openjdk
-    register: installed_jdk_version
-  - name: Install pre-reqs to build graphviz
-    apt:
-      name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
-      update_cache: yes  
-  - name: Expand source files archive
-    unarchive:
-      src: /home/kasm-default-profile/install_files/graphviz-2.50.0.tar.gz
-      dest: /home/kasm-default-profile/install_files/
-      remote_src: yes
-      creates: /home/kasm-default-profile/install_files/graphviz-2.50.0/README
-  - name: Build graphviz
-    shell: 
-      cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
-      chdir: /home/kasm-default-profile/install_files/graphviz-2.50.0/
-      executable: /bin/bash    
-  - name: Get graphviz version
-    shell: dot -V
-    register: installed_graphviz_version
-  - name: install plantuml
-    copy:
-      src: /home/kasm-default-profile/install_files/plantuml.jar
-      dest: /usr/local/bin/plantuml.jar
-      remote_src: yes
-  - name: Display JDK and GraphViz versions
-    debug:
-      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
-  - name: Test Graphviz version
-    fail:
-      msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
-    when: installed_graphviz_version.stderr != graphviz_version_expected        
 
 - 
   # install ASCII Doctor
