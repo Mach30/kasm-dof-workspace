@@ -302,7 +302,7 @@
       group: root
       state: link
   - name: Get gradle version
-    shell: gradle -V
+    shell: gradle --version
     register: installed_gradle_version
   - name: Display gradle version
     debug:
