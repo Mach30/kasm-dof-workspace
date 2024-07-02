@@ -250,7 +250,7 @@
       group: root
       state: link
   - name: Get gradle version
-    shell: gradle --version
+    shell: gradle -V
     register: installed_gradle_version
   - name: Display gradle version
     debug:
