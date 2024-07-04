@@ -14,8 +14,8 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - oclif v3.10.0
     - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
 - Utilities
-    - git v2.25.1 with @capsulecorplab .gitconfig
-    - [gradle v8.1.1](https://docs.gradle.org/8.1.1/release-notes.html)
+    - git v2.45.2 with @capsulecorplab .gitconfig
+    - [gradle v8.7](https://docs.gradle.org/8.7/release-notes.html)
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
     - [yamllint](https://github.com/adrienverge/yamllint) v1.31.0

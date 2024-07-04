@@ -170,6 +170,58 @@
       version: "{{ cli_njk_version }}"
 
 -
+  # install PlantUML
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+  - install_generator_plantuml
+  - install_doctools
+
+  vars:
+    jdk_version: 2:1.11-72
+    graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
+
+  tasks:
+  - name: Install JDK
+    apt:
+      name: "default-jdk={{ jdk_version }}"
+      update_cache: yes
+  - name: Get JDK Version
+    shell: java --version | grep -m 1 -i openjdk
+    register: installed_jdk_version
+  - name: Install pre-reqs to build graphviz
+    apt:
+      name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
+      update_cache: yes  
+  - name: Expand source files archive
+    unarchive:
+      src: /home/kasm-default-profile/install_files/graphviz-2.50.0.tar.gz
+      dest: /home/kasm-default-profile/install_files/
+      remote_src: yes
+      creates: /home/kasm-default-profile/install_files/graphviz-2.50.0/README
+  - name: Build graphviz
+    shell: 
+      cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
+      chdir: /home/kasm-default-profile/install_files/graphviz-2.50.0/
+      executable: /bin/bash    
+  - name: Get graphviz version
+    shell: dot -V
+    register: installed_graphviz_version
+  - name: install plantuml
+    copy:
+      src: /home/kasm-default-profile/install_files/plantuml.jar
+      dest: /usr/local/bin/plantuml.jar
+      remote_src: yes
+  - name: Display JDK and GraphViz versions
+    debug:
+      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
+  - name: Test Graphviz version
+    fail:
+      msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
+    when: installed_graphviz_version.stderr != graphviz_version_expected        
+
+-
   # install keychain, git, and @capsulecorplab .vimrc and .gitconfig
   hosts: localhost
   connection: local
@@ -177,18 +229,19 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.25.1"
+    git_version: "2.45.2"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
     keychain_version_expected: "{{ keychain_version }}.."
+    gradle_version: "8.7"
 
   tasks:
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
     apt:
-      name: "git"  
+      name: "git={{ git_version_to_install }}"
   - name: Install Git Bash Completion   
     apt:
       name: bash-completion
@@ -211,7 +264,7 @@
   - name: Test git version
     fail:
       msg: "Git Version Error: Expected {{ git_version }} | Found {{ installed_git_version.stdout }}"
-    when: installed_git_version.stdout != git_version  
+    when: installed_git_version.stdout != git_version
   - name: Test keychain version
     fail:
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
@@ -228,8 +281,8 @@
       src: /home/kasm-default-profile/install_files/.gitconfig
       dest: /home/kasm-default-profile/.gitconfig
       remote_src: yes
-  - name: Join gradle v8.1.1 zip file from split files
-    shell: cat /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip.parta* > /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+  - name: Join gradle v{{ gradle_version }} zip file from split files
+    shell: cat /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip.parta* > /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip
   - name: Create gradle directory
     file:
       path: /opt/gradle
@@ -237,14 +290,27 @@
       mode: '0755'
   - name: Unzip gradle binary
     unarchive:
-      src: /home/kasm-default-profile/install_files/gradle-8.1.1-bin.zip
+      src: /home/kasm-default-profile/install_files/gradle-{{ gradle_version }}-bin.zip
       dest: /opt/gradle/
       remote_src: yes
-      creates: /opt/gradle/gradle-8.1.1/LICENSE
-  - name: add gradle to PATH
-    lineinfile:
-      path: "/etc/skel/.profile"
-      line: 'PATH=$PATH:/opt/gradle/gradle-8.1.1/bin'
+      creates: /opt/gradle/gradle-{{ gradle_version }}/LICENSE
+  - name: Create symlink to gradle in /usr/local/bin/
+    file:
+      src: /opt/gradle/gradle-{{ gradle_version }}/bin/gradle
+      dest: /usr/local/bin/gradle
+      owner: root
+      group: root
+      state: link
+  - name: Get gradle version
+    shell: gradle --version | grep -v Welcome | grep Gradle | awk '{ print $2 }'
+    register: installed_gradle_version
+  - name: Display gradle versions
+    debug:
+      msg: "gradle = {{ installed_gradle_version.stdout }}"
+  - name: Test gradle version
+    fail:
+      msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
+    when: installed_gradle_version.stdout != gradle_version
 
 -
   # install Python packages with pip
@@ -343,58 +409,6 @@
   - role: andrewrothstein.pandoc
     pandoc_ver: "{{ pandoc_version }}"
 
--
-  # install PlantUML
-  hosts: localhost
-  connection: local
-  gather_facts: yes
-  tags:
-  - install_generator_plantuml
-  - install_doctools
-
-  vars:
-    jdk_version: 2:1.11-72
-    graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
-
-  tasks:
-  - name: Install JDK
-    apt:
-      name: "default-jdk={{ jdk_version }}"
-      update_cache: yes
-  - name: Get JDK Version
-    shell: java --version | grep -m 1 -i openjdk
-    register: installed_jdk_version
-  - name: Install pre-reqs to build graphviz
-    apt:
-      name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
-      update_cache: yes  
-  - name: Expand source files archive
-    unarchive:
-      src: /home/kasm-default-profile/install_files/graphviz-2.50.0.tar.gz
-      dest: /home/kasm-default-profile/install_files/
-      remote_src: yes
-      creates: /home/kasm-default-profile/install_files/graphviz-2.50.0/README
-  - name: Build graphviz
-    shell: 
-      cmd: ./configure --enable-perl=no && make > /tmp/graphviz_build_output.txt 2>&1 && make install
-      chdir: /home/kasm-default-profile/install_files/graphviz-2.50.0/
-      executable: /bin/bash    
-  - name: Get graphviz version
-    shell: dot -V
-    register: installed_graphviz_version
-  - name: install plantuml
-    copy:
-      src: /home/kasm-default-profile/install_files/plantuml.jar
-      dest: /usr/local/bin/plantuml.jar
-      remote_src: yes
-  - name: Display JDK and GraphViz versions
-    debug:
-      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
-  - name: Test Graphviz version
-    fail:
-      msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
-    when: installed_graphviz_version.stderr != graphviz_version_expected        
-
 - 
   # install ASCII Doctor
   hosts: localhost
@@ -407,6 +421,7 @@
   vars:
     asciidoctor_version: 2.0.18
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
+    public_suffix_version: 5.1.1
 
   tasks:
   - name: Install Ruby
@@ -420,6 +435,9 @@
     apt:
       name: libssl-dev
       update_cache: yes
+  - name: gem install public_suffix -v {{ public_suffix_version }}
+    shell: 
+      cmd: "gem install public_suffix -v {{ public_suffix_version }}"
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
