@@ -66,7 +66,7 @@
       name: build-essential
       update_cache: yes
 
-- 
+-
   # Install NodeJS Tools
   hosts: localhost
   connection: local
@@ -76,21 +76,16 @@
   - install_doctools
 
   vars:
-    node_version: "20.11.1"
+    node_version: "20.15.1"
     v_node_version: "v{{ node_version }}"
-    npm_version: "10.2.4"
-    npx_version: "10.2.4"
-    yarn_version: "3.5.0"
-    yo_version: "4.3.1"
-    generator_code_version: "1.7.5"
-    oclif_version: "4.3.6"
-    typescript_version: "5.1.3"
-    npm_cli_login_version: "1.0.0"
-    cli_njk_version: "1.0.0"
+    npm_version: "10.7.0"
+    npx_version: "10.7.0"
+    yo_version: "5.0.0"
+    generator_code_version: "1.11.1"
+    oclif_version: "4.14.6"
+    typescript_version: "5.5.3"
 
   tasks:   # Test Node JS Tools versions
-  - name: Install Yarn
-    shell: "corepack enable && corepack prepare yarn@{{ yarn_version }} --activate"
   - name: Get node version
     shell: node --version
     register: installed_node_version
@@ -100,27 +95,18 @@
   - name: Get npx installed version
     shell: npx --version
     register: installed_npx_version
-  - name: Get yarn version
-    shell: yarn --version
-    register: installed_yarn_version    
   - name: Get oclif version
     shell: oclif --version 2>/dev/null | sed 's/\ /\n/g' | grep oclif | sed 's/\///g' | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_oclif_version
   - name: Get TypeScript Compiler version
     shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_tsc_version
-  - name: Get cli-njk version
-    shell: njk --version
-    register: installed_cli_njk_version
   - name: Display node tool versions
     debug:
-      msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
+      msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }}"
   - name: Display TypeScript Compiler version
     debug:
       msg: "tsc = {{ installed_tsc_version.stdout }}"
-  - name: Display cli-njk version
-    debug:
-      msg: "cli-njk = {{ installed_cli_njk_version.stdout }}"
   - name: Test node version
     fail:
       msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
@@ -133,23 +119,14 @@
     fail:
       msg: "NPX Version Error: Expected {{ npx_version }} | Found {{ installed_npx_version.stdout }}"
     when: installed_npx_version.stdout != npx_version
-  - name: Test yarn version
-    fail:
-      msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
-    when: installed_yarn_version.stdout != yarn_version
   - name: Test oclif version
     fail:
       msg: "oclif Version Error: Expected {{ oclif_version }} | Found {{ installed_oclif_version.stdout }}"
     when: installed_oclif_version.stdout != oclif_version
-    when: installed_yarn_version.stdout != yarn_version        
   - name: Test TypeScript Compiler version
     fail:
       msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
     when: installed_tsc_version.stdout != typescript_version
-  - name: Test cli-njk version
-    fail:
-      msg: "cli-njk Version Error: Expected {{ cli_njk_version }} | Found {{ installed_cli_njk_version.stdout }}"
-    when: installed_cli_njk_version.stdout != cli_njk_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -164,10 +141,31 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
-    - name: npm-cli-login
-      version: "{{ npm_cli_login_version }}"
-    - name: cli-njk
-      version: "{{ cli_njk_version }}"
+
+-
+  # Install Yarn
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+  - install_yarn
+
+  vars:
+    yarn_version: "4.3.1"
+
+  tasks:
+  - name: Install Yarn
+    shell: "corepack enable && corepack prepare yarn@{{ yarn_version }} --activate"
+  - name: Get yarn version
+    shell: yarn --version
+    register: installed_yarn_version
+  - name: Display yarn versions
+    debug:
+      msg: "yarn = {{ installed_yarn_version.stdout }}"
+  - name: Test yarn version
+    fail:
+      msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
+    when: installed_yarn_version.stdout != yarn_version
 
 -
   # install PlantUML
@@ -229,7 +227,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.45.2"
+    git_version: "2.46.0"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -511,7 +509,7 @@
       cmd: ln -s /usr/share/hunspell/* /home/dev/.config/Code/Dictionaries  
   roles:
     - role: gantsign.visual-studio-code
-      visual_studio_code_version: "1.77.3*"
+      visual_studio_code_version: "1.91.1*"
       users:
         - username: "dev"
           visual_studio_code_extensions:
@@ -520,7 +518,7 @@
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
             - dendron.dendron
-            - samuelcolvin.jinjahtml
+            - ginfuru.better-nunjucks
             - CurlyBrackets.markdown-word-count
             - ban.spellright
             - ms-python.python
