@@ -420,6 +420,7 @@
     asciidoctor_version: 2.0.18
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
     public_suffix_version: 5.1.1
+    css_parser_version: 1.17.1
 
   tasks:
   - name: Install Ruby
@@ -436,6 +437,9 @@
   - name: gem install public_suffix -v {{ public_suffix_version }}
     shell: 
       cmd: "gem install public_suffix -v {{ public_suffix_version }}"
+  - name: Install css_parser
+    shell:
+      cmd: "gem install css_parser -v {{ css_parser_version }}"
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
