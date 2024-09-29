@@ -418,7 +418,6 @@
 
   vars:
     asciidoctor_version: 2.0.18
-    asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
     public_suffix_version: 5.1.1
     css_parser_version: 1.17.1
 
@@ -444,15 +443,15 @@
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
   - name: Get asciidoctor version
-    shell: asciidoctor --version | grep Asciidoctor | sed 's/[[:alpha:]|(|[:space:]]//g' | sed 's/[*~://]//g'
+    shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
     register: installed_asciidoctor_version
   - name: Display asciidoctor version
     debug:
       msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"   
   - name: Test asciidoctor version
     fail:
-      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
-    when: installed_asciidoctor_version.stdout != asciidoctor_version_expected        
+      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version }} | Found {{ installed_asciidoctor_version.stdout }}"
+    when: installed_asciidoctor_version.stdout != asciidoctor_version
 
 - 
   # install m30pm
