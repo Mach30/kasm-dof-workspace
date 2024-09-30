@@ -417,9 +417,9 @@
   - install_doctools
 
   vars:
-    asciidoctor_version: 2.0.18
-    public_suffix_version: 5.1.1
-    css_parser_version: 1.17.1
+    asciidoctor_version: "2.0.18"
+    public_suffix_version: "5.1.1"
+    css_parser_version: "1.17.1"
 
   tasks:
   - name: Install Ruby
@@ -427,7 +427,7 @@
       name: ruby-full
       update_cache: yes
   - name: Run gem install for asciidoctor
-    shell: 
+    shell:
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
   - name: Get asciidoctor version
     shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
@@ -451,7 +451,7 @@
       cmd: "gem install css_parser -v {{ css_parser_version }}"
   - name: Install PlantUML and PDF support
     shell:
-      cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
+      cmd: "gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf"
 
 - 
   # install m30pm
