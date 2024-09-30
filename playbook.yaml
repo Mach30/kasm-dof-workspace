@@ -429,6 +429,16 @@
   - name: Run gem install for asciidoctor
     shell: 
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
+  - name: Get asciidoctor version
+    shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
+    register: installed_asciidoctor_version
+  - name: Display asciidoctor version
+    debug:
+      msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"
+  - name: Test asciidoctor version
+    fail:
+      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version }} | Found {{ installed_asciidoctor_version.stdout }}"
+    when: installed_asciidoctor_version.stdout != asciidoctor_version
   - name: Install hexapdf dependencies
     apt:
       name: libssl-dev
@@ -442,16 +452,6 @@
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
-  - name: Get asciidoctor version
-    shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
-    register: installed_asciidoctor_version
-  - name: Display asciidoctor version
-    debug:
-      msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"   
-  - name: Test asciidoctor version
-    fail:
-      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version }} | Found {{ installed_asciidoctor_version.stdout }}"
-    when: installed_asciidoctor_version.stdout != asciidoctor_version
 
 - 
   # install m30pm
