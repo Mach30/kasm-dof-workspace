@@ -448,7 +448,7 @@
       cmd: "gem install public_suffix -v {{ public_suffix_version }}"
   - name: Install PlantUML and PDF support
     shell:
-      cmd: "gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay css_parser:{{ css_parser_version }} asciidoctor-pdf"
+      cmd: "gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay css_parser asciidoctor-pdf"
 
 - 
   # install m30pm
