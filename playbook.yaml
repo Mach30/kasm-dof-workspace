@@ -407,48 +407,48 @@
   - role: andrewrothstein.pandoc
     pandoc_ver: "{{ pandoc_version }}"
 
-- 
-  # install ASCII Doctor
-  hosts: localhost
-  connection: local
-  gather_facts: yes
-  tags:
-  - install_generator_asciidoctor
-  - install_doctools
-
-  vars:
-    asciidoctor_version: "2.0.18"
-    public_suffix_version: "5.1.1"
-    css_parser_version: "1.17.1"
-
-  tasks:
-  - name: Install Ruby
-    apt:
-      name: ruby-full
-      update_cache: yes
-  - name: Run gem install for asciidoctor
-    shell:
-      cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
-  - name: Get asciidoctor version
-    shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
-    register: installed_asciidoctor_version
-  - name: Display asciidoctor version
-    debug:
-      msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"
-  - name: Test asciidoctor version
-    fail:
-      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version }} | Found {{ installed_asciidoctor_version.stdout }}"
-    when: installed_asciidoctor_version.stdout != asciidoctor_version
-  - name: Install hexapdf dependencies
-    apt:
-      name: libssl-dev
-      update_cache: yes
-  - name: gem install public_suffix -v {{ public_suffix_version }}
-    shell: 
-      cmd: "gem install public_suffix -v {{ public_suffix_version }}"
-  - name: Install PlantUML and PDF support
-    shell:
-      cmd: "gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay css_parser asciidoctor-pdf"
+#- 
+#  # install ASCII Doctor
+#  hosts: localhost
+#  connection: local
+#  gather_facts: yes
+#  tags:
+#  - install_generator_asciidoctor
+#  - install_doctools
+#
+#  vars:
+#    asciidoctor_version: "2.0.18"
+#    public_suffix_version: "5.1.1"
+#    css_parser_version: "1.17.1"
+#
+#  tasks:
+#  - name: Install Ruby
+#    apt:
+#      name: ruby-full
+#      update_cache: yes
+#  - name: Run gem install for asciidoctor
+#    shell:
+#      cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
+#  - name: Get asciidoctor version
+#    shell: asciidoctor --version | grep Asciidoctor | awk '{ print $2 }'
+#    register: installed_asciidoctor_version
+#  - name: Display asciidoctor version
+#    debug:
+#      msg: "ASCII Doctor = {{ installed_asciidoctor_version.stdout }}"
+#  - name: Test asciidoctor version
+#    fail:
+#      msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version }} | Found {{ installed_asciidoctor_version.stdout }}"
+#    when: installed_asciidoctor_version.stdout != asciidoctor_version
+#  - name: Install hexapdf dependencies
+#    apt:
+#      name: libssl-dev
+#      update_cache: yes
+#  - name: gem install public_suffix -v {{ public_suffix_version }}
+#    shell: 
+#      cmd: "gem install public_suffix -v {{ public_suffix_version }}"
+#  - name: Install PlantUML and PDF support
+#    shell:
+#      cmd: "gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay css_parser asciidoctor-pdf"
 
 - 
   # install m30pm
