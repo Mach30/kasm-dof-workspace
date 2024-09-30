@@ -353,59 +353,59 @@
 #  roles:
 #    - role: geerlingguy.pip
 
--
-  # install Pandoc & TexLive
-  hosts: localhost
-  connection: local
-  gather_facts: yes
-  tags:
-  - install_generator_pandoc
-  - install_doctools
-
-  vars:
-    pandoc_version: "2.18"
-    texlive_version: "2019.20200218-1"
-    texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
-
-  tasks:
-  - name: install TeX Live
-    apt:
-      name: "texlive-full={{ texlive_version }}"
-      update_cache: yes
-    # https://mikefarah.gitbook.io/yq/
-  - name: Install yq
-    copy:
-      src: /home/kasm-default-profile/install_files/yq
-      dest: /usr/bin/yq
-      remote_src: yes
-      owner: root
-      group: root
-      mode: '0755'
-  - name: Install pandoc-citeproc
-    apt: 
-      name: pandoc-citeproc
-      update_cache: yes        
-  - name: Get pandoc version
-    shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
-    register: installed_pandoc_version
-  - name: Get TeX Live version  
-    shell: latex --version | grep -i Tex -m 1 
-    register: installed_texlive_version
-  - name: Display pandoc and texlive versions
-    debug:
-      msg: "pandoc = {{ installed_pandoc_version.stdout }} | texlive = {{ installed_texlive_version.stdout }}"
-  - name: Test pandoc version
-    fail:
-      msg: "Pandoc Version Error: Expected {{ pandoc_version }} | Found {{ installed_pandoc_version.stdout }}"
-    when: installed_pandoc_version.stdout != pandoc_version    
-  - name: Test texlive version
-    fail:
-      msg: "TeX Live Version Error: Expected {{ texlive_version_expected }} | Found {{ installed_texlive_version.stdout }}"
-    when: installed_texlive_version.stdout != texlive_version_expected        
-
-  roles:
-  - role: andrewrothstein.pandoc
-    pandoc_ver: "{{ pandoc_version }}"
+#-
+#  # install Pandoc & TexLive
+#  hosts: localhost
+#  connection: local
+#  gather_facts: yes
+#  tags:
+#  - install_generator_pandoc
+#  - install_doctools
+#
+#  vars:
+#    pandoc_version: "2.18"
+#    texlive_version: "2019.20200218-1"
+#    texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
+#
+#  tasks:
+#  - name: install TeX Live
+#    apt:
+#      name: "texlive-full={{ texlive_version }}"
+#      update_cache: yes
+#    # https://mikefarah.gitbook.io/yq/
+#  - name: Install yq
+#    copy:
+#      src: /home/kasm-default-profile/install_files/yq
+#      dest: /usr/bin/yq
+#      remote_src: yes
+#      owner: root
+#      group: root
+#      mode: '0755'
+#  - name: Install pandoc-citeproc
+#    apt: 
+#      name: pandoc-citeproc
+#      update_cache: yes        
+#  - name: Get pandoc version
+#    shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
+#    register: installed_pandoc_version
+#  - name: Get TeX Live version  
+#    shell: latex --version | grep -i Tex -m 1 
+#    register: installed_texlive_version
+#  - name: Display pandoc and texlive versions
+#    debug:
+#      msg: "pandoc = {{ installed_pandoc_version.stdout }} | texlive = {{ installed_texlive_version.stdout }}"
+#  - name: Test pandoc version
+#    fail:
+#      msg: "Pandoc Version Error: Expected {{ pandoc_version }} | Found {{ installed_pandoc_version.stdout }}"
+#    when: installed_pandoc_version.stdout != pandoc_version    
+#  - name: Test texlive version
+#    fail:
+#      msg: "TeX Live Version Error: Expected {{ texlive_version_expected }} | Found {{ installed_texlive_version.stdout }}"
+#    when: installed_texlive_version.stdout != texlive_version_expected        
+#
+#  roles:
+#  - role: andrewrothstein.pandoc
+#    pandoc_ver: "{{ pandoc_version }}"
 
 #- 
 #  # install ASCII Doctor
