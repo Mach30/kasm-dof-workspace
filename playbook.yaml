@@ -333,7 +333,7 @@
       update_cache: yes
   - name: Install python packages with pip
     pip:
-      extra_args: --break-system-packages
+      break_system_packages: true
       name:
         - jupyter_server==1.23.6
         - jupyterlab
@@ -353,9 +353,6 @@
       owner: root
       group: root
       state: link
-
-#  roles:
-#    - role: geerlingguy.pip
 
 -
   # install Pandoc & TexLive
