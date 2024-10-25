@@ -235,6 +235,9 @@
     gradle_version: "8.7"
 
   tasks:
+  - name: Install unzip   # required for unarchive command
+    apt:
+      name: unzip
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
