@@ -364,7 +364,7 @@
   - install_doctools
 
   vars:
-    pandoc_version: "3.5"
+    pandoc_version: "3.2"
     texlive_version: "2023.20240207-1"
     texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
 
