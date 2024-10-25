@@ -381,11 +381,7 @@
       remote_src: yes
       owner: root
       group: root
-      mode: '0755'
-  - name: Install pandoc-citeproc
-    apt: 
-      name: pandoc-citeproc
-      update_cache: yes        
+      mode: '0755'  
   - name: Get pandoc version
     shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_pandoc_version
