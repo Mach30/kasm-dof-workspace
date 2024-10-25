@@ -323,10 +323,10 @@
   - install_doctools
 
   tasks:
-  - name: Update OS to point python to python3
-    apt:
-      name: python-is-python3
-      update_cache: yes
+#  - name: Update OS to point python to python3
+#    apt:
+#      name: python-is-python3
+#      update_cache: yes
   - name: Install pip for python3 with Apt
     apt:
       name: python3-pip
