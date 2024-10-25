@@ -366,7 +366,7 @@
   vars:
     pandoc_version: "3.2"
     texlive_version: "2023.20240207-1"
-    texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
+    texlive_version_expected: "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)"
 
   tasks:
   - name: install TeX Live
@@ -395,10 +395,10 @@
     fail:
       msg: "Pandoc Version Error: Expected {{ pandoc_version }} | Found {{ installed_pandoc_version.stdout }}"
     when: installed_pandoc_version.stdout != pandoc_version    
-#  - name: Test texlive version
-#    fail:
-#      msg: "TeX Live Version Error: Expected {{ texlive_version_expected }} | Found {{ installed_texlive_version.stdout }}"
-#    when: installed_texlive_version.stdout != texlive_version_expected        
+  - name: Test texlive version
+    fail:
+      msg: "TeX Live Version Error: Expected {{ texlive_version_expected }} | Found {{ installed_texlive_version.stdout }}"
+    when: installed_texlive_version.stdout != texlive_version_expected        
 
   roles:
   - role: andrewrothstein.pandoc
@@ -414,9 +414,9 @@
   - install_doctools
 
   vars:
-    asciidoctor_version: 2.0.18
+    asciidoctor_version: 2.0.23
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
-    public_suffix_version: 5.1.1
+    public_suffix_version: 6.0.1
 
   tasks:
   - name: Install Ruby
