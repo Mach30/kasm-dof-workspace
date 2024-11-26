@@ -447,6 +447,26 @@
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected        
 
+-
+  # install m30pm
+  hosts: localhost
+  connection: local
+  tags:
+  - install_m30pm
+
+  tasks:
+  - name: Extract m30pm from tarball
+    unarchive:
+      src: /home/kasm-default-profile/install_files/m30pm-v0.0.0-2f6abcd2-linux-x64.tar.gz
+      dest: /home/kasm-default-profile/install_files/
+      creates: /home/kasm-default-profile/install_files/m30pm/bin/m30pm
+      remote_src: yes
+  - name: Copy m30pm binary to /usr/local/bin
+    copy:
+      src: /home/kasm-default-profile/install_files/m30pm/bin/m30pm
+      dest: /usr/local/bin/m30pm
+      remote_src: yes
+
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
