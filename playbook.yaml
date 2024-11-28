@@ -466,6 +466,9 @@
       src: /home/kasm-default-profile/install_files/m30pm/bin/m30pm
       dest: /usr/local/bin/m30pm
       remote_src: yes
+      owner: root
+      group: root
+      mode: a+x
 
 - 
   # install sudo for the vs-code role below 
