@@ -461,14 +461,17 @@
       dest: /home/kasm-default-profile/install_files/
       creates: /home/kasm-default-profile/install_files/m30pm/bin/m30pm
       remote_src: yes
-  - name: Copy m30pm binary to /usr/local/bin
+  - name: Copy m30pm tarball contents to /opt
     copy:
-      src: /home/kasm-default-profile/install_files/m30pm/bin/m30pm
-      dest: /usr/local/bin/m30pm
+      src: /home/kasm-default-profile/install_files/m30pm
+      dest: /opt
       remote_src: yes
       owner: root
       group: root
       mode: a+x
+  - name: Create symlink for m30pm binary in /usr/local/bin
+    shell:
+      cmd: ln -s /opt/m30pm/bin/m30pm /usr/local/bin/m30pm
 
 - 
   # install sudo for the vs-code role below 
