@@ -340,15 +340,6 @@
         - linkml==1.6.0
         - black[jupyter]
         - yamllint==1.31.0
-  - name: install & configure poetry
-    shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
-  - name: Create symlink to Poetry in /usr/local/bin/
-    file:
-      src: /opt/poetry/bin/poetry
-      dest: /usr/local/bin/poetry
-      owner: root
-      group: root
-      state: link
 
 #  roles:
 #    - role: geerlingguy.pip
