@@ -76,13 +76,13 @@
   - install_doctools
 
   vars:
-    node_version: "20.15.1"
+    node_version: "23.8.0"
     v_node_version: "v{{ node_version }}"
-    npm_version: "10.7.0"
-    npx_version: "10.7.0"
+    npm_version: "10.9.2"
+    npx_version: "10.9.2"
     yo_version: "5.0.0"
     generator_code_version: "1.11.1"
-    oclif_version: "4.14.6"
+    oclif_version: "4.17.32"
     typescript_version: "5.5.3"
 
   tasks:   # Test Node JS Tools versions
@@ -227,7 +227,7 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.46.0"
+    git_version: "2.48.1"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-1"
@@ -340,15 +340,6 @@
         - linkml==1.6.0
         - black[jupyter]
         - yamllint==1.31.0
-  - name: install & configure poetry
-    shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
-  - name: Create symlink to Poetry in /usr/local/bin/
-    file:
-      src: /opt/poetry/bin/poetry
-      dest: /usr/local/bin/poetry
-      owner: root
-      group: root
-      state: link
 
 #  roles:
 #    - role: geerlingguy.pip
@@ -420,6 +411,7 @@
     asciidoctor_version: 2.0.18
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
     public_suffix_version: 5.1.1
+    css_parser_version: 1.17.1
 
   tasks:
   - name: Install Ruby
@@ -427,15 +419,18 @@
       name: ruby-full
       update_cache: yes
   - name: Run gem install for asciidoctor
-    shell: 
+    shell:
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
   - name: Install hexapdf dependencies
     apt:
       name: libssl-dev
       update_cache: yes
-  - name: gem install public_suffix -v {{ public_suffix_version }}
-    shell: 
+  - name: Run gem install for public_suffix
+    shell:
       cmd: "gem install public_suffix -v {{ public_suffix_version }}"
+  - name: Run gem install for css_parser
+    shell:
+      cmd: "gem install css_parser -v {{ css_parser_version }}"
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
