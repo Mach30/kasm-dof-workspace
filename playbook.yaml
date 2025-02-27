@@ -425,6 +425,9 @@
     apt:
       name: libssl-dev
       update_cache: yes
+  - name: Run gem install for public_suffix
+    shell:
+      cmd: "gem install public_suffix -v {{ public_suffix_version }}"
   - name: Run gem install for css_parser
     shell:
       cmd: "gem install css_parser -v {{ css_parser_version }}"
