@@ -76,7 +76,7 @@
   - install_doctools
 
   vars:
-    node_version: "20.15.1"
+    node_version: "23.8.0"
     v_node_version: "v{{ node_version }}"
     npm_version: "10.7.0"
     npx_version: "10.7.0"
