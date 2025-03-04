@@ -319,6 +319,9 @@
   - install_python_based_tools
   - install_doctools
 
+  vars:
+    linkml_version: "1.8.7"
+
   tasks:
   - name: Update OS to point python to python3
     apt:
@@ -337,7 +340,7 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - linkml==1.6.0
+        - linkml=={{ linkml_version }}
         - black[jupyter]
         - yamllint==1.31.0
 
