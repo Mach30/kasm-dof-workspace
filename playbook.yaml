@@ -84,6 +84,7 @@
     generator_code_version: "1.11.1"
     oclif_version: "4.17.32"
     typescript_version: "5.5.3"
+    m30pm_version: "0.1.0-alpha.4"
 
   tasks:   # Test Node JS Tools versions
   - name: Get node version
@@ -141,6 +142,8 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: m30pm
+      version: "{{ m30pm_version }}"
 
 -
   # Install Yarn
