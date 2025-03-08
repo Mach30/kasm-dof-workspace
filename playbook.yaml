@@ -84,6 +84,7 @@
     generator_code_version: "1.11.1"
     oclif_version: "4.17.32"
     typescript_version: "5.5.3"
+    m30pm_version: "0.1.0-alpha.4"
 
   tasks:   # Test Node JS Tools versions
   - name: Get node version
@@ -101,6 +102,9 @@
   - name: Get TypeScript Compiler version
     shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_tsc_version
+  - name: Get m30pm version
+    shell: m30pm --version | awk '{ print $1 }' | sed 's/m30pm\///g'
+    register: installed_m30pm_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }}"
@@ -127,6 +131,10 @@
     fail:
       msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
     when: installed_tsc_version.stdout != typescript_version
+  - name: Test m30pm version
+    fail:
+      msg: "m30pm Version Error: Expected {{ m30pm_version }} | Found {{ installed_m30pm_version.stdout }}"
+    when: installed_m30pm_version.stdout != m30pm_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -141,6 +149,8 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: m30pm
+      version: "{{ m30pm_version }}"
 
 -
   # Install Yarn
