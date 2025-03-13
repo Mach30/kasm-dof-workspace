@@ -84,7 +84,7 @@
     generator_code_version: "1.11.1"
     oclif_version: "4.17.32"
     typescript_version: "5.5.3"
-    m30pm_version: "0.1.0-rc.1"
+    m30pm_version: "0.1.0"
 
   tasks:   # Test Node JS Tools versions
   - name: Get node version
