@@ -13,7 +13,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - yarn v4.3.1
     - oclif v4.17.32
     - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
-    - m30pm v0.1.0-alpha.4
+    - m30pm v0.1.0
 - Utilities
     - git v2.48.1 with @capsulecorplab .gitconfig
     - [gradle v8.7](https://docs.gradle.org/8.7/release-notes.html)
