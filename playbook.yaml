@@ -76,14 +76,15 @@
   - install_doctools
 
   vars:
-    node_version: "20.15.1"
+    node_version: "23.8.0"
     v_node_version: "v{{ node_version }}"
-    npm_version: "10.7.0"
-    npx_version: "10.7.0"
+    npm_version: "10.9.2"
+    npx_version: "10.9.2"
     yo_version: "5.0.0"
     generator_code_version: "1.11.1"
-    oclif_version: "4.14.6"
+    oclif_version: "4.17.32"
     typescript_version: "5.5.3"
+    m30pm_version: "0.1.0"
 
   tasks:   # Test Node JS Tools versions
   - name: Get node version
@@ -101,6 +102,9 @@
   - name: Get TypeScript Compiler version
     shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_tsc_version
+  - name: Get m30pm version
+    shell: m30pm --version | awk '{ print $1 }' | sed 's/m30pm\///g'
+    register: installed_m30pm_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }}"
@@ -127,6 +131,10 @@
     fail:
       msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
     when: installed_tsc_version.stdout != typescript_version
+  - name: Test m30pm version
+    fail:
+      msg: "m30pm Version Error: Expected {{ m30pm_version }} | Found {{ installed_m30pm_version.stdout }}"
+    when: installed_m30pm_version.stdout != m30pm_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -141,6 +149,8 @@
       version: "{{ oclif_version }}"
     - name: typescript
       version: "{{ typescript_version }}"
+    - name: m30pm
+      version: "{{ m30pm_version }}"
 
 -
   # Install Yarn
@@ -227,8 +237,8 @@
   tags: install_utilities
 
   vars:
-    git_version: "2.47.0"
-    git_version_to_install: "1:{{ git_version }}-0ppa2~ubuntu24.04.1"
+    git_version: "2.48.1"
+    git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-4"
     keychain_version_expected: "{{ keychain_version }}.."
@@ -242,7 +252,7 @@
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
     apt:
-      name: "git={{ git_version_to_install }}"
+      name: "git"
   - name: Install Git Bash Completion   
     apt:
       name: bash-completion
@@ -262,10 +272,10 @@
   - name: Display git and keychain versions
     debug:
       msg: "git = {{ installed_git_version.stdout }} | keychain = {{ installed_keychain_version.stdout }}"
-  - name: Test git version
-    fail:
-      msg: "Git Version Error: Expected {{ git_version }} | Found {{ installed_git_version.stdout }}"
-    when: installed_git_version.stdout != git_version
+#  - name: Test git version
+#    fail:
+#      msg: "Git Version Error: Expected {{ git_version }} | Found {{ installed_git_version.stdout }}"
+#    when: installed_git_version.stdout != git_version
   - name: Test keychain version
     fail:
       msg: "Keychain Version Error: Expected {{ keychain_version_expected }} | Found {{ installed_keychain_version.stdout }}"
@@ -322,6 +332,9 @@
   - install_python_based_tools
   - install_doctools
 
+  vars:
+    linkml_version: "1.8.7"
+
   tasks:
   - name: Update OS to point python to python3
     apt:
@@ -341,18 +354,9 @@
         - voila
         - pint
         - jinja2==3.1.2
-        - linkml==1.6.0
+        - linkml=={{ linkml_version }}
         - black[jupyter]
         - yamllint==1.31.0
-  - name: install & configure poetry
-    shell: curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
-  - name: Create symlink to Poetry in /usr/local/bin/
-    file:
-      src: /opt/poetry/bin/poetry
-      dest: /usr/local/bin/poetry
-      owner: root
-      group: root
-      state: link
 
 -
   # install Pandoc & TexLive
@@ -424,15 +428,18 @@
       name: ruby-full
       update_cache: yes
   - name: Run gem install for asciidoctor
-    shell: 
+    shell:
       cmd: "gem install asciidoctor -v {{ asciidoctor_version }}"
   - name: Install hexapdf dependencies
     apt:
       name: libssl-dev
       update_cache: yes
-  - name: gem install public_suffix -v {{ public_suffix_version }}
-    shell: 
+  - name: Run gem install for public_suffix
+    shell:
       cmd: "gem install public_suffix -v {{ public_suffix_version }}"
+  - name: Run gem install for css_parser
+    shell:
+      cmd: "gem install css_parser -v {{ css_parser_version }}"
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf

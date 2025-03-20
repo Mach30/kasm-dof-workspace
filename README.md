@@ -7,14 +7,15 @@
 This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeling Language](https://github.com/Mach30/m30ml), [Mach 30 Project Manager](https://github.com/Mach30/m30mlTools), the [Distributed OSHW Framework (DOF)](https://github.com/Mach30/dof), and [Sliderule](https://github.com/Mach30/sliderule) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - Node JS Tools
-    - nodejs v20.15.1
-    - npm v10.7.0 (included with nodejs)
-    - npx v10.7.0 (included with nodejs)
+    - nodejs v23.8.0
+    - npm v10.9.2 (included with nodejs)
+    - npx v10.9.2 (included with nodejs)
     - yarn v4.3.1
-    - oclif v4.14.6
+    - oclif v4.17.32
     - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
+    - m30pm v0.1.0
 - Utilities
-    - git v2.45.2 with @capsulecorplab .gitconfig
+    - git v2.48.1 with @capsulecorplab .gitconfig
     - [gradle v8.7](https://docs.gradle.org/8.7/release-notes.html)
     - [Keychain](https://www.funtoo.org/Keychain) v2.8.5
     - Vim (pre-installed) with @capsulecorplab [vimrc](https://gist.github.com/capsulecorplab/495058e7a57ed8adaed3c40c80d09739#file-vimrc)
@@ -24,10 +25,10 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - Juptyer Notebook
     - Voila
     - Pint
-    - LinkML v1.6.0
+    - LinkML v1.8.7
     - Poetry (latest)
 - Artifact Generators
-    - [Pandoc](https://pandoc.org/) v2.17.0.1
+    - [Pandoc](https://pandoc.org/) v2.18
     - [TeX Live](https://www.tug.org/texlive/) v2019 to enable PDF support in Pandoc
     - [yq](https://mikefarah.gitbook.io/yq/) v4.33.2
     - [PlantUML](https://plantuml.com/)
