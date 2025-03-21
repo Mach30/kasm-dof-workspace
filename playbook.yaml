@@ -187,13 +187,13 @@
   - install_doctools
 
   vars:
-    jdk_version: 2:1.11-72
+    jdk_version: 2:1.21-75
     graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
 
   tasks:
   - name: Install JDK
     apt:
-      name: "default-jdk={{ jdk_version }}"
+      name: "default-jdk={{ jdk_version }}+exp1"
       update_cache: yes
   - name: Get JDK Version
     shell: java --version | grep -m 1 -i openjdk
@@ -240,11 +240,14 @@
     git_version: "2.48.1"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu20.04.1"
     keychain_version: "2.8.5"
-    keychain_version_to_install: "{{ keychain_version }}-1"
+    keychain_version_to_install: "{{ keychain_version }}-4"
     keychain_version_expected: "{{ keychain_version }}.."
     gradle_version: "8.7"
 
   tasks:
+  - name: Install unzip   # required for unarchive command
+    apt:
+      name: unzip
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
@@ -343,6 +346,7 @@
       update_cache: yes
   - name: Install python packages with pip
     pip:
+      break_system_packages: true
       name:
         - jupyter_server==1.23.6
         - jupyterlab
@@ -354,9 +358,6 @@
         - black[jupyter]
         - yamllint==1.31.0
 
-#  roles:
-#    - role: geerlingguy.pip
-
 -
   # install Pandoc & TexLive
   hosts: localhost
@@ -367,9 +368,9 @@
   - install_doctools
 
   vars:
-    pandoc_version: "2.18"
-    texlive_version: "2019.20200218-1"
-    texlive_version_expected: "pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian)"
+    pandoc_version: "3.2"
+    texlive_version: "2023.20240207-1"
+    texlive_version_expected: "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)"
 
   tasks:
   - name: install TeX Live
@@ -384,11 +385,7 @@
       remote_src: yes
       owner: root
       group: root
-      mode: '0755'
-  - name: Install pandoc-citeproc
-    apt: 
-      name: pandoc-citeproc
-      update_cache: yes        
+      mode: '0755'  
   - name: Get pandoc version
     shell: pandoc --version | grep -m 1 -i pandoc | sed 's/[[:alpha:]|(|[:space:]]//g'
     register: installed_pandoc_version
@@ -421,10 +418,9 @@
   - install_doctools
 
   vars:
-    asciidoctor_version: 2.0.18
+    asciidoctor_version: 2.0.23
     asciidoctor_version_expected: "{{ asciidoctor_version }}[.]"
-    public_suffix_version: 5.1.1
-    css_parser_version: 1.17.1
+    public_suffix_version: 6.0.1
 
   tasks:
   - name: Install Ruby
@@ -441,9 +437,6 @@
   - name: Run gem install for public_suffix
     shell:
       cmd: "gem install public_suffix -v {{ public_suffix_version }}"
-  - name: Run gem install for css_parser
-    shell:
-      cmd: "gem install css_parser -v {{ css_parser_version }}"
   - name: Install PlantUML and PDF support
     shell:
       cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
@@ -494,7 +487,7 @@
   - name: Add dev user
     user:
       name: dev
-      uid: 1001
+      uid: 1002
 
 -
   # install the remainder of the tools
@@ -614,72 +607,6 @@
       dest: /home/kasm-default-profile/
       remote_src: yes
 
-#-
-#  # Install OML Tools
-#  hosts: localhost
-#  connection: local
-#  tags: install_oml
-#
-#  tasks:
-#  - name: Unzip Rosetta RCP
-#    unarchive:
-#      src: /home/kasm-default-profile/install_files/rosetta-1.0.7-linux.gtk.x86_64.zip
-#      dest: /usr/local/bin
-#      remote_src: yes
-#  - name: symlink Rosetta executable into /usr/local/bin/    
-#    file:
-#      src: /usr/local/bin/Rosetta/Rosetta
-#      dest: /usr/local/bin/rosetta
-#      owner: root
-#      group: root
-#      state: link
-#  - name: Install R helper packages
-#    apt:
-#      name: software-properties-common, dirmngr
-#      update_cache: yes
-#      install_recommends: no
-#  - name: Install OML tutorials R dependencies
-#    apt:
-#      name: libxml2-dev, libcurl4-openssl-dev, libssl-dev, gfortran, libblas-dev, liblapack-dev
-#      update_cache: yes      
-#  - name: Add R repos signing key
-#    shell:
-#      cmd: wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-#  - name: Add the R 4.0 repo from CRAN
-#    shell:
-#      cmd: add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
-#  - name: Install R
-#    apt:
-#      name: r-base
-#      update_cache: yes
-#      install_recommends: no
-#  - name: Install R Studio
-#    apt:
-#      deb: /home/kasm-default-profile/install_files/rstudio-2022.02.1-461-amd64.deb
-#      update_cache: yes       
-#  - name: Add Stardog aptkey
-#    shell:
-#      cmd: curl http://packages.stardog.com/stardog.gpg.pub | apt-key add
-#  - name: Add stardog repo
-#    shell:
-#      cmd: echo "deb http://packages.stardog.com/deb/ stable main" >> /etc/apt/sources.list  
-#  - name: Install stardog
-#    apt:
-#      name: stardog
-#      update_cache: yes
-#      install_recommends: yes        
-#  - name: install startstardogserver.sh
-#    copy:
-#      src: /home/kasm-default-profile/install_files/startstardogserver.sh
-#      dest: /opt/stardog/startstardogserver.sh
-#      owner: stardog
-#      group: stardog
-#      mode: '0755'
-#      remote_src: yes
-#  - name: add startstardogserver.sh to PATH
-#    lineinfile:
-#      path: "/etc/skel/.profile"
-#      line: 'PATH=$PATH:/opt/stardog'
 
 -
   # install readers
