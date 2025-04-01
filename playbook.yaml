@@ -525,7 +525,7 @@
             - ms-python.python
             - yzhang.markdown-all-in-one
             - ms-python.black-formatter
-            - vscjava.vscode-gradle
+            - redhat.java
             - esbenp.prettier-vscode
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
@@ -557,7 +557,7 @@
               "editor.defaultFormatter": "ms-python.black-formatter",
               "editor.formatOnSave": true
             },
-            "java.gradle.buildServer.enabled": "off"
+            "java.server.launchMode": "LightWeight"
           }  
 
 -
