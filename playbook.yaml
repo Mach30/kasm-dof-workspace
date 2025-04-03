@@ -526,6 +526,7 @@
             - ms-python.black-formatter
             - redhat.java
             - esbenp.prettier-vscode
+            - usernamehw.errorlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
