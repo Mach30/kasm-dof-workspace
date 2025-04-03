@@ -56,12 +56,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_AUTH_TOKEN }}
 
+      - name: Workaround to free up 5GB of space # see https://github.com/actions/runner-images/issues/709#issuecomment-612569242
+        run: sudo rm -rf "/usr/local/share/boost" && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      - name: Show disk usage
+        run: df -h
+
       - name: Build image
         uses: docker/build-push-action@v4.0.0
         with:
           tags: ${{ steps.docker_meta.outputs.tags }} 
           file: ./Dockerfile
-          
+
+      - name: Show disk usage
+        run: df -h
+
       - name: Push image
         uses: docker/build-push-action@v4.0.0
         with:
