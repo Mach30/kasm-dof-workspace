@@ -514,7 +514,6 @@
       users:
         - username: "dev"
           visual_studio_code_extensions:
-            - waderyan.nodejs-extension-pack
             - redhat.vscode-yaml
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
