@@ -557,7 +557,8 @@
               "editor.defaultFormatter": "ms-python.black-formatter",
               "editor.formatOnSave": true
             },
-            "java.server.launchMode": "LightWeight"
+            "java.server.launchMode": "LightWeight",
+            "telemetry.telemetryLevel": "off"
           }  
 
 -
