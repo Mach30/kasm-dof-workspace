@@ -338,10 +338,10 @@
   - name: Display gradle versions
     debug:
       msg: "gradle = {{ installed_gradle_version.stdout }}"
-  # - name: Test gradle version
-  #   fail:
-  #     msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
-  #   when: installed_gradle_version.stdout != gradle_version
+  - name: Test gradle version
+    fail:
+      msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
+    when: installed_gradle_version.stdout != gradle_version
 
 -
   # install Python packages with pip
