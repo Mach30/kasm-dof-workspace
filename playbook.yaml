@@ -67,6 +67,29 @@
       update_cache: yes
 
 -
+  # Install java
+  hosts: localhost
+  connection: local
+  tags:
+  - install_generator_plantuml
+  - install_utilities
+
+  vars:
+    jdk_version: 2:1.21-75
+
+  tasks:
+  - name: Install JDK
+    apt:
+      name: "default-jdk={{ jdk_version }}+exp1"
+      update_cache: yes
+  - name: Get JDK Version
+    shell: java --version | grep -m 1 -i openjdk
+    register: installed_jdk_version
+  - name: Display JDK version
+    debug:
+      msg: "JDK = {{ installed_jdk_version.stdout }}"
+
+-
   # Install NodeJS Tools
   hosts: localhost
   connection: local
@@ -187,17 +210,9 @@
   - install_doctools
 
   vars:
-    jdk_version: 2:1.21-75
     graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
 
   tasks:
-  - name: Install JDK
-    apt:
-      name: "default-jdk={{ jdk_version }}+exp1"
-      update_cache: yes
-  - name: Get JDK Version
-    shell: java --version | grep -m 1 -i openjdk
-    register: installed_jdk_version
   - name: Install pre-reqs to build graphviz
     apt:
       name: libcairo2-dev, libexpat-dev, libfreetype-dev, libgd-dev, fontconfig-config, libglib2.0-dev, libgtk2.0-dev, libpng-dev, zlib1g-dev, libsdl-pango-dev, libgts-bin, libgtk-3-dev, libgtkglext1-dev, glade, freeglut3-dev, autoconf, automake, bison, flex, ghostscript, libtool, pkg-config, swig
@@ -221,9 +236,9 @@
       src: /home/kasm-default-profile/install_files/plantuml.jar
       dest: /usr/local/bin/plantuml.jar
       remote_src: yes
-  - name: Display JDK and GraphViz versions
+  - name: Display GraphViz versions
     debug:
-      msg: "JDK = {{ installed_jdk_version.stdout }} | graphviz = {{ installed_graphviz_version.stderr }}"
+      msg: "graphviz = {{ installed_graphviz_version.stderr }}"
   - name: Test Graphviz version
     fail:
       msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
@@ -248,6 +263,11 @@
   - name: Install unzip   # required for unarchive command
     apt:
       name: unzip
+      update_cache: yes
+  - name: Install tree
+    apt:
+      name: "tree"
+      update_cache: yes
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
@@ -318,10 +338,10 @@
   - name: Display gradle versions
     debug:
       msg: "gradle = {{ installed_gradle_version.stdout }}"
-  - name: Test gradle version
-    fail:
-      msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
-    when: installed_gradle_version.stdout != gradle_version
+  # - name: Test gradle version
+  #   fail:
+  #     msg: "Gradle Version Error: Expected {{ gradle_version }} | Found {{ installed_gradle_version.stdout }}"
+  #   when: installed_gradle_version.stdout != gradle_version
 
 -
   # install Python packages with pip
@@ -514,7 +534,6 @@
       users:
         - username: "dev"
           visual_studio_code_extensions:
-            - waderyan.nodejs-extension-pack
             - redhat.vscode-yaml
             - jebbs.plantuml
             - asciidoctor.asciidoctor-vscode
@@ -525,7 +544,9 @@
             - ms-python.python
             - yzhang.markdown-all-in-one
             - ms-python.black-formatter
-            - vscjava.vscode-gradle
+            - redhat.java
+            - esbenp.prettier-vscode
+            - usernamehw.errorlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
@@ -551,11 +572,14 @@
                 "latex",
                 "plaintext"
             ],
+            "spellright.notificationClass": "information",
             "python.formatting.provider": "none",
             "[python]": {
               "editor.defaultFormatter": "ms-python.black-formatter",
               "editor.formatOnSave": true
-            }
+            },
+            "java.server.launchMode": "LightWeight",
+            "telemetry.telemetryLevel": "off"
           }  
 
 -

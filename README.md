@@ -45,6 +45,7 @@ This repo provides a workspace for Mach 30 volunteers to work on [Mach 30 Modeli
     - [Better Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+    - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - Knowledge Capture Tools
   - [JabRef](https://www.jabref.org/) v5.5.6
 - [Pharo](https://pharo.org/)
