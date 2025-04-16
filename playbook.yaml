@@ -264,6 +264,10 @@
     apt:
       name: unzip
       update_cache: yes
+  - name: Install tree
+    apt:
+      name: "tree"
+      update_cache: yes
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
