@@ -108,6 +108,8 @@
     oclif_version: "4.17.32"
     typescript_version: "5.5.3"
     m30pm_version: "0.1.0"
+    markedpp_version: "2.0.1"
+    markedpp_version_expected: "v{{ markedpp_version }}"
 
   tasks:   # Test Node JS Tools versions
   - name: Get node version
@@ -128,6 +130,9 @@
   - name: Get m30pm version
     shell: m30pm --version | awk '{ print $1 }' | sed 's/m30pm\///g'
     register: installed_m30pm_version
+  - name: Get markedpp version | sed 's/v\///g'
+    shell: markedpp --version
+    register: installed_markedpp_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }}"
@@ -158,6 +163,10 @@
     fail:
       msg: "m30pm Version Error: Expected {{ m30pm_version }} | Found {{ installed_m30pm_version.stdout }}"
     when: installed_m30pm_version.stdout != m30pm_version
+  - name: Test markedpp version
+    fail:
+      msg: "markedpp Version Error: Expected {{ markedpp_version_expected }} | Found {{ installed_markedpp_version.stdout }}"
+    when: installed_markedpp_version.stdout != markedpp_version_expected
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -174,6 +183,8 @@
       version: "{{ typescript_version }}"
     - name: m30pm
       version: "{{ m30pm_version }}"
+    - name: markedpp
+      version: "{{ markedpp_version }}"
 
 -
   # Install Yarn
