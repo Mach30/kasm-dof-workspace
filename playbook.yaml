@@ -590,8 +590,13 @@
               "editor.formatOnSave": true
             },
             "java.server.launchMode": "LightWeight",
+            "editor.indentSize": "tabSize",
+            "[json]": {
+                "editor.insertSpaces": true,
+                "editor.tabSize": 2
+            },
             "telemetry.telemetryLevel": "off"
-          }  
+          }
 
 -
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
