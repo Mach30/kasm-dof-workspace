@@ -405,6 +405,7 @@
         - yamllint==1.31.0
         - mystmd
         - cookiecutter
+      extra_args: --ignore-installed
 
 -
   # install Pandoc & TexLive
